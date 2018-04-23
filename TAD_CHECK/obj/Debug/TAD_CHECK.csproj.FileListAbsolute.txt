@@ -20,3 +20,13 @@ C:\Users\JiMin\source\repos\TAD_CHECK\TAD_CHECK\TAD_CHECK\obj\Debug\TAD_CHECK.cs
 C:\Users\JiMin\source\repos\TAD_CHECK\TAD_CHECK\TAD_CHECK\obj\Debug\TAD_CHECK.csproj.CoreCompileInputs.cache
 C:\Users\JiMin\source\repos\TAD_CHECK\TAD_CHECK\TAD_CHECK\obj\Debug\TAD_CHECK.exe
 C:\Users\JiMin\source\repos\TAD_CHECK\TAD_CHECK\TAD_CHECK\obj\Debug\TAD_CHECK.pdb
+D:\DIO_TEST\TAD_CHECK\bin\Debug\TAD_CHECK.exe.config
+D:\DIO_TEST\TAD_CHECK\bin\Debug\TAD_CHECK.exe
+D:\DIO_TEST\TAD_CHECK\bin\Debug\TAD_CHECK.pdb
+D:\DIO_TEST\TAD_CHECK\obj\Debug\TAD_CHECK.csprojResolveAssemblyReference.cache
+D:\DIO_TEST\TAD_CHECK\obj\Debug\TAD_CHECK.TAD.resources
+D:\DIO_TEST\TAD_CHECK\obj\Debug\TAD_CHECK.Properties.Resources.resources
+D:\DIO_TEST\TAD_CHECK\obj\Debug\TAD_CHECK.csproj.GenerateResource.cache
+D:\DIO_TEST\TAD_CHECK\obj\Debug\TAD_CHECK.csproj.CoreCompileInputs.cache
+D:\DIO_TEST\TAD_CHECK\obj\Debug\TAD_CHECK.exe
+D:\DIO_TEST\TAD_CHECK\obj\Debug\TAD_CHECK.pdb

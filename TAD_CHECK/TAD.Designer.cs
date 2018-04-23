@@ -41,30 +41,22 @@ namespace TAD_CHECK
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.WRITE4 = new System.Windows.Forms.Button();
-            this.WRITE3 = new System.Windows.Forms.Button();
-            this.WRITE2 = new System.Windows.Forms.Button();
-            this.WRITE1 = new System.Windows.Forms.Button();
-            this.READ4 = new System.Windows.Forms.Button();
-            this.READ3 = new System.Windows.Forms.Button();
-            this.READ2 = new System.Windows.Forms.Button();
-            this.READ1 = new System.Windows.Forms.Button();
-            this.HILO4 = new System.Windows.Forms.Button();
+            this.DIO3 = new System.Windows.Forms.Button();
+            this.DIO2 = new System.Windows.Forms.Button();
+            this.DIO1 = new System.Windows.Forms.Button();
+            this.DIO0 = new System.Windows.Forms.Button();
+            this.DIO3_WRITE = new System.Windows.Forms.Button();
+            this.DIO2_WRITE = new System.Windows.Forms.Button();
             this.HILO3 = new System.Windows.Forms.Button();
             this.HILO2 = new System.Windows.Forms.Button();
-            this.HILO1 = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
+            this.DIO3_Label = new System.Windows.Forms.Button();
+            this.DIO2_Label = new System.Windows.Forms.Button();
+            this._READ = new System.Windows.Forms.Label();
+            this._WRITE = new System.Windows.Forms.Label();
             this.cancel = new System.Windows.Forms.Button();
             this.minimise = new System.Windows.Forms.Button();
-            this.DIO1_icon = new System.Windows.Forms.Label();
-            this.DIO2_icon = new System.Windows.Forms.Label();
-            this.DIO3_icon = new System.Windows.Forms.Label();
-            this.DIO4_icon = new System.Windows.Forms.Label();
+            this.Error_Prompt = new System.Windows.Forms.Label();
+            this.Read_Prompt = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -139,9 +131,6 @@ namespace TAD_CHECK
             this.IP_input.Name = "IP_input";
             this.IP_input.Size = new System.Drawing.Size(161, 27);
             this.IP_input.TabIndex = 15;
-            this.IP_input.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDownHandler);
-            this.IP_input.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnKeyPressHandler);
-            this.IP_input.KeyUp += new System.Windows.Forms.KeyEventHandler(this.OnKeyUpHandler);
             // 
             // Port_input
             // 
@@ -150,12 +139,10 @@ namespace TAD_CHECK
             this.Port_input.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Port_input.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.Port_input.Location = new System.Drawing.Point(36, 261);
-            this.Port_input.MaxLength = 4;
+            this.Port_input.MaxLength = 5;
             this.Port_input.Name = "Port_input";
             this.Port_input.Size = new System.Drawing.Size(161, 27);
             this.Port_input.TabIndex = 16;
-            this.Port_input.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PortKeyDown);
-            this.Port_input.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PortKeyPress);
             // 
             // pictureBox1
             // 
@@ -196,176 +183,119 @@ namespace TAD_CHECK
             this.label2.Text = "PORT";
             this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // WRITE4
+            // DIO3
             // 
-            this.WRITE4.BackColor = System.Drawing.Color.Transparent;
-            this.WRITE4.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.WRITE4.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.WRITE4.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.WRITE4.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.WRITE4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.WRITE4.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.WRITE4.ForeColor = System.Drawing.Color.White;
-            this.WRITE4.Location = new System.Drawing.Point(363, 285);
-            this.WRITE4.Margin = new System.Windows.Forms.Padding(0);
-            this.WRITE4.Name = "WRITE4";
-            this.WRITE4.Size = new System.Drawing.Size(55, 23);
-            this.WRITE4.TabIndex = 61;
-            this.WRITE4.Text = "TEST";
-            this.WRITE4.UseVisualStyleBackColor = false;
-            this.WRITE4.Click += new System.EventHandler(this.WRITE4_Click);
+            this.DIO3.BackColor = System.Drawing.Color.Transparent;
+            this.DIO3.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.DIO3.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.DIO3.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.DIO3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.DIO3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.DIO3.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DIO3.ForeColor = System.Drawing.Color.White;
+            this.DIO3.Location = new System.Drawing.Point(419, 205);
+            this.DIO3.Margin = new System.Windows.Forms.Padding(0);
+            this.DIO3.Name = "DIO3";
+            this.DIO3.Size = new System.Drawing.Size(49, 23);
+            this.DIO3.TabIndex = 61;
+            this.DIO3.Text = "DIO3";
+            this.DIO3.UseVisualStyleBackColor = false;
+            this.DIO3.Click += new System.EventHandler(this.DIO3_READ_Click);
             // 
-            // WRITE3
+            // DIO2
             // 
-            this.WRITE3.BackColor = System.Drawing.Color.Transparent;
-            this.WRITE3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.WRITE3.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.WRITE3.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.WRITE3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.WRITE3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.WRITE3.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.WRITE3.ForeColor = System.Drawing.Color.White;
-            this.WRITE3.Location = new System.Drawing.Point(363, 239);
-            this.WRITE3.Margin = new System.Windows.Forms.Padding(0);
-            this.WRITE3.Name = "WRITE3";
-            this.WRITE3.Size = new System.Drawing.Size(55, 23);
-            this.WRITE3.TabIndex = 60;
-            this.WRITE3.Text = "TEST";
-            this.WRITE3.UseVisualStyleBackColor = false;
-            this.WRITE3.Click += new System.EventHandler(this.WRITE3_Click);
+            this.DIO2.BackColor = System.Drawing.Color.Transparent;
+            this.DIO2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.DIO2.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.DIO2.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.DIO2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.DIO2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.DIO2.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DIO2.ForeColor = System.Drawing.Color.White;
+            this.DIO2.Location = new System.Drawing.Point(363, 205);
+            this.DIO2.Margin = new System.Windows.Forms.Padding(0);
+            this.DIO2.Name = "DIO2";
+            this.DIO2.Size = new System.Drawing.Size(49, 23);
+            this.DIO2.TabIndex = 60;
+            this.DIO2.Text = "DIO2";
+            this.DIO2.UseVisualStyleBackColor = false;
+            this.DIO2.Click += new System.EventHandler(this.DIO2_READ_Click);
             // 
-            // WRITE2
+            // DIO1
             // 
-            this.WRITE2.BackColor = System.Drawing.Color.Transparent;
-            this.WRITE2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.WRITE2.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.WRITE2.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.WRITE2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.WRITE2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.WRITE2.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.WRITE2.ForeColor = System.Drawing.Color.White;
-            this.WRITE2.Location = new System.Drawing.Point(365, 137);
-            this.WRITE2.Margin = new System.Windows.Forms.Padding(0);
-            this.WRITE2.Name = "WRITE2";
-            this.WRITE2.Size = new System.Drawing.Size(55, 23);
-            this.WRITE2.TabIndex = 59;
-            this.WRITE2.Text = "TEST";
-            this.WRITE2.UseVisualStyleBackColor = false;
-            this.WRITE2.Click += new System.EventHandler(this.WRITE2_Click);
+            this.DIO1.BackColor = System.Drawing.Color.Transparent;
+            this.DIO1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.DIO1.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.DIO1.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.DIO1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.DIO1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.DIO1.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DIO1.ForeColor = System.Drawing.Color.White;
+            this.DIO1.Location = new System.Drawing.Point(307, 205);
+            this.DIO1.Margin = new System.Windows.Forms.Padding(0);
+            this.DIO1.Name = "DIO1";
+            this.DIO1.Size = new System.Drawing.Size(49, 23);
+            this.DIO1.TabIndex = 59;
+            this.DIO1.Text = "DIO1";
+            this.DIO1.UseVisualStyleBackColor = false;
+            this.DIO1.Click += new System.EventHandler(this.DIO1_READ_Click);
             // 
-            // WRITE1
+            // DIO0
             // 
-            this.WRITE1.BackColor = System.Drawing.Color.Transparent;
-            this.WRITE1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.WRITE1.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.WRITE1.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.WRITE1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.WRITE1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.WRITE1.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.WRITE1.ForeColor = System.Drawing.Color.White;
-            this.WRITE1.Location = new System.Drawing.Point(365, 91);
-            this.WRITE1.Margin = new System.Windows.Forms.Padding(0);
-            this.WRITE1.Name = "WRITE1";
-            this.WRITE1.Size = new System.Drawing.Size(55, 23);
-            this.WRITE1.TabIndex = 58;
-            this.WRITE1.Text = "TEST";
-            this.WRITE1.UseVisualStyleBackColor = false;
-            this.WRITE1.Click += new System.EventHandler(this.WRITE1_Click);
+            this.DIO0.BackColor = System.Drawing.Color.Transparent;
+            this.DIO0.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.DIO0.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.DIO0.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.DIO0.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.DIO0.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.DIO0.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DIO0.ForeColor = System.Drawing.Color.White;
+            this.DIO0.Location = new System.Drawing.Point(251, 205);
+            this.DIO0.Margin = new System.Windows.Forms.Padding(0);
+            this.DIO0.Name = "DIO0";
+            this.DIO0.Size = new System.Drawing.Size(49, 23);
+            this.DIO0.TabIndex = 58;
+            this.DIO0.Text = "DIO0";
+            this.DIO0.UseVisualStyleBackColor = false;
+            this.DIO0.Click += new System.EventHandler(this.DIO0_READ_Click);
             // 
-            // READ4
+            // DIO3_WRITE
             // 
-            this.READ4.BackColor = System.Drawing.Color.Transparent;
-            this.READ4.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.READ4.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.READ4.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.READ4.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.READ4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.READ4.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.READ4.ForeColor = System.Drawing.Color.White;
-            this.READ4.Location = new System.Drawing.Point(302, 285);
-            this.READ4.Margin = new System.Windows.Forms.Padding(0);
-            this.READ4.Name = "READ4";
-            this.READ4.Size = new System.Drawing.Size(55, 23);
-            this.READ4.TabIndex = 57;
-            this.READ4.Text = "READ";
-            this.READ4.UseVisualStyleBackColor = false;
-            this.READ4.Click += new System.EventHandler(this.READ4_Click);
+            this.DIO3_WRITE.BackColor = System.Drawing.Color.Transparent;
+            this.DIO3_WRITE.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.DIO3_WRITE.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.DIO3_WRITE.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.DIO3_WRITE.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.DIO3_WRITE.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.DIO3_WRITE.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DIO3_WRITE.ForeColor = System.Drawing.Color.White;
+            this.DIO3_WRITE.Location = new System.Drawing.Point(359, 149);
+            this.DIO3_WRITE.Margin = new System.Windows.Forms.Padding(0);
+            this.DIO3_WRITE.Name = "DIO3_WRITE";
+            this.DIO3_WRITE.Size = new System.Drawing.Size(55, 23);
+            this.DIO3_WRITE.TabIndex = 57;
+            this.DIO3_WRITE.Text = "WRITE";
+            this.DIO3_WRITE.UseVisualStyleBackColor = false;
+            this.DIO3_WRITE.Click += new System.EventHandler(this.DIO3_WRITE_Click);
             // 
-            // READ3
+            // DIO2_WRITE
             // 
-            this.READ3.BackColor = System.Drawing.Color.Transparent;
-            this.READ3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.READ3.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.READ3.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.READ3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.READ3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.READ3.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.READ3.ForeColor = System.Drawing.Color.White;
-            this.READ3.Location = new System.Drawing.Point(302, 239);
-            this.READ3.Margin = new System.Windows.Forms.Padding(0);
-            this.READ3.Name = "READ3";
-            this.READ3.Size = new System.Drawing.Size(55, 23);
-            this.READ3.TabIndex = 56;
-            this.READ3.Text = "READ";
-            this.READ3.UseVisualStyleBackColor = false;
-            this.READ3.Click += new System.EventHandler(this.READ3_Click);
-            // 
-            // READ2
-            // 
-            this.READ2.BackColor = System.Drawing.Color.Transparent;
-            this.READ2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.READ2.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.READ2.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.READ2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.READ2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.READ2.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.READ2.ForeColor = System.Drawing.Color.White;
-            this.READ2.Location = new System.Drawing.Point(304, 137);
-            this.READ2.Margin = new System.Windows.Forms.Padding(0);
-            this.READ2.Name = "READ2";
-            this.READ2.Size = new System.Drawing.Size(55, 23);
-            this.READ2.TabIndex = 55;
-            this.READ2.Text = "READ";
-            this.READ2.UseVisualStyleBackColor = false;
-            this.READ2.Click += new System.EventHandler(this.READ2_Click);
-            // 
-            // READ1
-            // 
-            this.READ1.BackColor = System.Drawing.Color.Transparent;
-            this.READ1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.READ1.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.READ1.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.READ1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.READ1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.READ1.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.READ1.ForeColor = System.Drawing.Color.White;
-            this.READ1.Location = new System.Drawing.Point(304, 91);
-            this.READ1.Margin = new System.Windows.Forms.Padding(0);
-            this.READ1.Name = "READ1";
-            this.READ1.Size = new System.Drawing.Size(55, 23);
-            this.READ1.TabIndex = 54;
-            this.READ1.Text = "READ";
-            this.READ1.UseVisualStyleBackColor = false;
-            this.READ1.Click += new System.EventHandler(this.READ1_Click);
-            // 
-            // HILO4
-            // 
-            this.HILO4.BackColor = System.Drawing.Color.Transparent;
-            this.HILO4.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.HILO4.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.HILO4.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.HILO4.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.HILO4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.HILO4.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HILO4.ForeColor = System.Drawing.Color.White;
-            this.HILO4.Location = new System.Drawing.Point(241, 285);
-            this.HILO4.Margin = new System.Windows.Forms.Padding(0);
-            this.HILO4.Name = "HILO4";
-            this.HILO4.Size = new System.Drawing.Size(55, 23);
-            this.HILO4.TabIndex = 53;
-            this.HILO4.Text = "HIGH";
-            this.HILO4.UseVisualStyleBackColor = false;
-            this.HILO4.Click += new System.EventHandler(this.HILO4_Click);
+            this.DIO2_WRITE.BackColor = System.Drawing.Color.Transparent;
+            this.DIO2_WRITE.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.DIO2_WRITE.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.DIO2_WRITE.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.DIO2_WRITE.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.DIO2_WRITE.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.DIO2_WRITE.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DIO2_WRITE.ForeColor = System.Drawing.Color.White;
+            this.DIO2_WRITE.Location = new System.Drawing.Point(359, 121);
+            this.DIO2_WRITE.Margin = new System.Windows.Forms.Padding(0);
+            this.DIO2_WRITE.Name = "DIO2_WRITE";
+            this.DIO2_WRITE.Size = new System.Drawing.Size(55, 23);
+            this.DIO2_WRITE.TabIndex = 56;
+            this.DIO2_WRITE.Text = "WRITE";
+            this.DIO2_WRITE.UseVisualStyleBackColor = false;
+            this.DIO2_WRITE.Click += new System.EventHandler(this.DIO2_WRITE_CLICK);
             // 
             // HILO3
             // 
@@ -377,14 +307,14 @@ namespace TAD_CHECK
             this.HILO3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.HILO3.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.HILO3.ForeColor = System.Drawing.Color.White;
-            this.HILO3.Location = new System.Drawing.Point(241, 239);
+            this.HILO3.Location = new System.Drawing.Point(305, 149);
             this.HILO3.Margin = new System.Windows.Forms.Padding(0);
             this.HILO3.Name = "HILO3";
-            this.HILO3.Size = new System.Drawing.Size(55, 23);
-            this.HILO3.TabIndex = 52;
+            this.HILO3.Size = new System.Drawing.Size(49, 23);
+            this.HILO3.TabIndex = 53;
             this.HILO3.Text = "HIGH";
             this.HILO3.UseVisualStyleBackColor = false;
-            this.HILO3.Click += new System.EventHandler(this.HILO3_Click);
+            this.HILO3.Click += new System.EventHandler(this.HILO4_Click);
             // 
             // HILO2
             // 
@@ -396,110 +326,75 @@ namespace TAD_CHECK
             this.HILO2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.HILO2.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.HILO2.ForeColor = System.Drawing.Color.White;
-            this.HILO2.Location = new System.Drawing.Point(243, 137);
+            this.HILO2.Location = new System.Drawing.Point(305, 121);
             this.HILO2.Margin = new System.Windows.Forms.Padding(0);
             this.HILO2.Name = "HILO2";
-            this.HILO2.Size = new System.Drawing.Size(55, 23);
-            this.HILO2.TabIndex = 51;
+            this.HILO2.Size = new System.Drawing.Size(49, 23);
+            this.HILO2.TabIndex = 52;
             this.HILO2.Text = "HIGH";
             this.HILO2.UseVisualStyleBackColor = false;
-            this.HILO2.Click += new System.EventHandler(this.HILO2_Click);
+            this.HILO2.Click += new System.EventHandler(this.HILO3_Click);
             // 
-            // HILO1
+            // DIO3_Label
             // 
-            this.HILO1.BackColor = System.Drawing.Color.Transparent;
-            this.HILO1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.HILO1.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.HILO1.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.HILO1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.HILO1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.HILO1.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HILO1.ForeColor = System.Drawing.Color.White;
-            this.HILO1.Location = new System.Drawing.Point(243, 91);
-            this.HILO1.Margin = new System.Windows.Forms.Padding(0);
-            this.HILO1.Name = "HILO1";
-            this.HILO1.Size = new System.Drawing.Size(55, 23);
-            this.HILO1.TabIndex = 50;
-            this.HILO1.Text = "HIGH";
-            this.HILO1.UseVisualStyleBackColor = false;
-            this.HILO1.Click += new System.EventHandler(this.HILO1_Click);
+            this.DIO3_Label.BackColor = System.Drawing.Color.Transparent;
+            this.DIO3_Label.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.DIO3_Label.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.DIO3_Label.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.DIO3_Label.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.DIO3_Label.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.DIO3_Label.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DIO3_Label.ForeColor = System.Drawing.Color.White;
+            this.DIO3_Label.Location = new System.Drawing.Point(251, 149);
+            this.DIO3_Label.Margin = new System.Windows.Forms.Padding(0);
+            this.DIO3_Label.Name = "DIO3_Label";
+            this.DIO3_Label.Size = new System.Drawing.Size(49, 23);
+            this.DIO3_Label.TabIndex = 51;
+            this.DIO3_Label.Text = "DIO3";
+            this.DIO3_Label.UseVisualStyleBackColor = false;
             // 
-            // label7
+            // DIO2_Label
             // 
-            this.label7.BackColor = System.Drawing.Color.Transparent;
-            this.label7.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.Color.Transparent;
-            this.label7.Location = new System.Drawing.Point(241, 193);
-            this.label7.Name = "label7";
-            this.label7.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label7.Size = new System.Drawing.Size(68, 23);
-            this.label7.TabIndex = 49;
-            this.label7.Text = "OUTPUT";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.DIO2_Label.BackColor = System.Drawing.Color.Transparent;
+            this.DIO2_Label.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.DIO2_Label.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.DIO2_Label.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.DIO2_Label.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.DIO2_Label.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.DIO2_Label.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DIO2_Label.ForeColor = System.Drawing.Color.White;
+            this.DIO2_Label.Location = new System.Drawing.Point(251, 121);
+            this.DIO2_Label.Margin = new System.Windows.Forms.Padding(0);
+            this.DIO2_Label.Name = "DIO2_Label";
+            this.DIO2_Label.Size = new System.Drawing.Size(49, 23);
+            this.DIO2_Label.TabIndex = 50;
+            this.DIO2_Label.Text = "DIO2";
+            this.DIO2_Label.UseVisualStyleBackColor = false;
             // 
-            // label5
+            // _READ
             // 
-            this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.Transparent;
-            this.label5.Location = new System.Drawing.Point(240, 45);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(55, 23);
-            this.label5.TabIndex = 48;
-            this.label5.Text = "INPUT";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this._READ.BackColor = System.Drawing.Color.Transparent;
+            this._READ.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._READ.ForeColor = System.Drawing.Color.Transparent;
+            this._READ.Location = new System.Drawing.Point(251, 177);
+            this._READ.Name = "_READ";
+            this._READ.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this._READ.Size = new System.Drawing.Size(49, 23);
+            this._READ.TabIndex = 49;
+            this._READ.Text = "READ";
+            this._READ.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label4
+            // _WRITE
             // 
-            this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(241, 262);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(46, 23);
-            this.label4.TabIndex = 47;
-            this.label4.Text = "DIO 4";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label3
-            // 
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(241, 216);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(46, 23);
-            this.label3.TabIndex = 46;
-            this.label3.Text = "DIO 3";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label6
-            // 
-            this.label6.BackColor = System.Drawing.Color.Transparent;
-            this.label6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label6.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label6.Location = new System.Drawing.Point(243, 114);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(46, 23);
-            this.label6.TabIndex = 45;
-            this.label6.Text = "DIO 2";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label8
-            // 
-            this.label8.BackColor = System.Drawing.Color.Transparent;
-            this.label8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label8.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.Color.White;
-            this.label8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label8.Location = new System.Drawing.Point(243, 68);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(46, 23);
-            this.label8.TabIndex = 44;
-            this.label8.Text = "DIO 1";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this._WRITE.BackColor = System.Drawing.Color.Transparent;
+            this._WRITE.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._WRITE.ForeColor = System.Drawing.Color.Transparent;
+            this._WRITE.Location = new System.Drawing.Point(251, 93);
+            this._WRITE.Name = "_WRITE";
+            this._WRITE.Size = new System.Drawing.Size(53, 23);
+            this._WRITE.TabIndex = 48;
+            this._WRITE.Text = "WRITE";
+            this._WRITE.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // cancel
             // 
@@ -510,7 +405,7 @@ namespace TAD_CHECK
             this.cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cancel.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cancel.ForeColor = System.Drawing.Color.White;
-            this.cancel.Location = new System.Drawing.Point(426, 3);
+            this.cancel.Location = new System.Drawing.Point(201, 3);
             this.cancel.Name = "cancel";
             this.cancel.Size = new System.Drawing.Size(26, 34);
             this.cancel.TabIndex = 62;
@@ -527,7 +422,7 @@ namespace TAD_CHECK
             this.minimise.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.minimise.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.minimise.ForeColor = System.Drawing.Color.White;
-            this.minimise.Location = new System.Drawing.Point(393, 3);
+            this.minimise.Location = new System.Drawing.Point(168, 3);
             this.minimise.Name = "minimise";
             this.minimise.Size = new System.Drawing.Size(26, 34);
             this.minimise.TabIndex = 63;
@@ -536,92 +431,51 @@ namespace TAD_CHECK
             this.minimise.UseVisualStyleBackColor = false;
             this.minimise.Click += new System.EventHandler(this.Minimise_Click);
             // 
-            // DIO1_icon
+            // Error_Prompt
             // 
-            this.DIO1_icon.BackColor = System.Drawing.Color.Transparent;
-            this.DIO1_icon.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DIO1_icon.ForeColor = System.Drawing.Color.LawnGreen;
-            this.DIO1_icon.Location = new System.Drawing.Point(430, 89);
-            this.DIO1_icon.Margin = new System.Windows.Forms.Padding(0);
-            this.DIO1_icon.Name = "DIO1_icon";
-            this.DIO1_icon.Size = new System.Drawing.Size(16, 25);
-            this.DIO1_icon.TabIndex = 64;
-            this.DIO1_icon.Text = "O";
-            this.DIO1_icon.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.DIO1_icon.Visible = false;
+            this.Error_Prompt.BackColor = System.Drawing.Color.Transparent;
+            this.Error_Prompt.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Error_Prompt.ForeColor = System.Drawing.Color.Red;
+            this.Error_Prompt.Location = new System.Drawing.Point(251, 268);
+            this.Error_Prompt.Name = "Error_Prompt";
+            this.Error_Prompt.Size = new System.Drawing.Size(217, 20);
+            this.Error_Prompt.TabIndex = 64;
+            this.Error_Prompt.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // DIO2_icon
+            // Read_Prompt
             // 
-            this.DIO2_icon.BackColor = System.Drawing.Color.Transparent;
-            this.DIO2_icon.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DIO2_icon.ForeColor = System.Drawing.Color.LawnGreen;
-            this.DIO2_icon.Location = new System.Drawing.Point(430, 137);
-            this.DIO2_icon.Margin = new System.Windows.Forms.Padding(0);
-            this.DIO2_icon.Name = "DIO2_icon";
-            this.DIO2_icon.Size = new System.Drawing.Size(16, 25);
-            this.DIO2_icon.TabIndex = 65;
-            this.DIO2_icon.Text = "O";
-            this.DIO2_icon.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.DIO2_icon.Visible = false;
-            // 
-            // DIO3_icon
-            // 
-            this.DIO3_icon.BackColor = System.Drawing.Color.Transparent;
-            this.DIO3_icon.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DIO3_icon.ForeColor = System.Drawing.Color.LawnGreen;
-            this.DIO3_icon.Location = new System.Drawing.Point(430, 237);
-            this.DIO3_icon.Margin = new System.Windows.Forms.Padding(0);
-            this.DIO3_icon.Name = "DIO3_icon";
-            this.DIO3_icon.Size = new System.Drawing.Size(16, 25);
-            this.DIO3_icon.TabIndex = 66;
-            this.DIO3_icon.Text = "O";
-            this.DIO3_icon.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.DIO3_icon.Visible = false;
-            // 
-            // DIO4_icon
-            // 
-            this.DIO4_icon.BackColor = System.Drawing.Color.Transparent;
-            this.DIO4_icon.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DIO4_icon.ForeColor = System.Drawing.Color.LawnGreen;
-            this.DIO4_icon.Location = new System.Drawing.Point(430, 285);
-            this.DIO4_icon.Margin = new System.Windows.Forms.Padding(0);
-            this.DIO4_icon.Name = "DIO4_icon";
-            this.DIO4_icon.Size = new System.Drawing.Size(16, 25);
-            this.DIO4_icon.TabIndex = 67;
-            this.DIO4_icon.Text = "O";
-            this.DIO4_icon.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.DIO4_icon.Visible = false;
+            this.Read_Prompt.BackColor = System.Drawing.Color.Transparent;
+            this.Read_Prompt.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Read_Prompt.ForeColor = System.Drawing.Color.White;
+            this.Read_Prompt.Location = new System.Drawing.Point(252, 245);
+            this.Read_Prompt.Name = "Read_Prompt";
+            this.Read_Prompt.Size = new System.Drawing.Size(217, 20);
+            this.Read_Prompt.TabIndex = 65;
+            this.Read_Prompt.Text = "[DIO#] [INPUT/OUTPUT] [LOW/HIGH]";
+            this.Read_Prompt.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // TAD
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.SystemColors.GrayText;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(454, 360);
-            this.Controls.Add(this.DIO4_icon);
-            this.Controls.Add(this.DIO3_icon);
-            this.Controls.Add(this.DIO2_icon);
-            this.Controls.Add(this.DIO1_icon);
+            this.ClientSize = new System.Drawing.Size(229, 350);
+            this.Controls.Add(this.Read_Prompt);
+            this.Controls.Add(this.Error_Prompt);
             this.Controls.Add(this.minimise);
             this.Controls.Add(this.cancel);
-            this.Controls.Add(this.WRITE4);
-            this.Controls.Add(this.WRITE3);
-            this.Controls.Add(this.WRITE2);
-            this.Controls.Add(this.WRITE1);
-            this.Controls.Add(this.READ4);
-            this.Controls.Add(this.READ3);
-            this.Controls.Add(this.READ2);
-            this.Controls.Add(this.READ1);
-            this.Controls.Add(this.HILO4);
+            this.Controls.Add(this.DIO3);
+            this.Controls.Add(this.DIO2);
+            this.Controls.Add(this.DIO1);
+            this.Controls.Add(this.DIO0);
+            this.Controls.Add(this.DIO3_WRITE);
+            this.Controls.Add(this.DIO2_WRITE);
             this.Controls.Add(this.HILO3);
             this.Controls.Add(this.HILO2);
-            this.Controls.Add(this.HILO1);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label8);
+            this.Controls.Add(this.DIO3_Label);
+            this.Controls.Add(this.DIO2_Label);
+            this.Controls.Add(this._READ);
+            this.Controls.Add(this._WRITE);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -654,30 +508,22 @@ namespace TAD_CHECK
         private PictureBox pictureBox1;
         public Label label1;
         public Label label2;
-        public Button WRITE4;
-        public Button WRITE3;
-        public Button WRITE2;
-        public Button WRITE1;
-        public Button READ4;
-        public Button READ3;
-        public Button READ2;
-        public Button READ1;
-        private Button HILO4;
+        public Button DIO3;
+        public Button DIO2;
+        public Button DIO1;
+        public Button DIO0;
+        public Button DIO3_WRITE;
+        public Button DIO2_WRITE;
         private Button HILO3;
         private Button HILO2;
-        public Button HILO1;
-        private Label label7;
-        private Label label5;
-        private Label label4;
-        private Label label3;
-        private Label label6;
-        private Label label8;
+        private Button DIO3_Label;
+        public Button DIO2_Label;
+        private Label _READ;
+        private Label _WRITE;
         private Button cancel;
         private Button minimise;
-        public Label DIO1_icon;
-        public Label DIO2_icon;
-        public Label DIO3_icon;
-        public Label DIO4_icon;
+        public Label Error_Prompt;
+        public Label Read_Prompt;
     }
 }
 

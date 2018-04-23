@@ -16,559 +16,134 @@ namespace TAD_CHECK
 {
     public partial class TAD : Form
     {
-        string TARGET;
-        int PORT;
-        bool number = false;
-        int ipcount = 0;
-        int decimalcount = 0;
-        int state = 0;
-        int totallength = 0;
-        int[] decimalplace = new int[4];
-        byte[] bytedata;
-        int[] stateorder = new int[16];
-        string recieved;
-        string writedio3 = "00";
-        string writedio4 = "00";
+        TcpClient pc;
+        DIO DIO = new DIO();
 
-        TcpClient pc = new TcpClient();
+        string TARGET;
+        string PORT;
+
+        byte[] wrtcmd;
+        byte[] rcvcmd;
+        bool isvalid;
 
         public TAD()
         {
             InitializeComponent();
         }
 
-
-        private void PortKeyDown (object sender, KeyEventArgs e)
-        {
-            if ((e.KeyCode >= Keys.D0) && (e.KeyCode <= Keys.D9))
-                number = true;
-            else if ((e.KeyCode >= Keys.NumPad0) && (e.KeyCode <= Keys.NumPad9))
-                number = true;
-            else if (e.KeyCode == Keys.Back)
-                number = true;
-            else
-                number = false;
-        }
-
-        private void PortKeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (number == false)
-                e.Handled = true;
-        }
-
-
-        private void OnKeyDownHandler(object sender, KeyEventArgs e) 
-        {
-            state = stateorder[totallength];
-            Debug.WriteLine("state: " + state);
-
-            if (state == 0)
-            {
-                if (e.KeyCode == Keys.D2 || e.KeyCode == Keys.NumPad2)
-                {
-                    state = 1;
-                    ipcount++;
-                    totallength++;
-                    number = true;
-                }
-                else if ((e.KeyCode >= Keys.D0 && e.KeyCode <= Keys.D9) || (e.KeyCode >= Keys.NumPad0 && e.KeyCode <= Keys.NumPad9))
-                {
-                    state = 2;
-                    ipcount++;
-                    totallength++;
-                    number = true;
-                }
-                else
-                    number = false;
-
-                stateorder[totallength] = state;
-            }
-
-            //we have enters the 2 hundreds
-            else if (state == 1)
-            {
-                if (((e.KeyCode == Keys.Decimal) || (e.KeyCode == Keys.OemPeriod)) && decimalcount < 3)
-                {
-                    //check for decimal count and length
-                    number = true;
-                    state = 0;
-                    ipcount = 0;
-                    decimalplace[decimalcount] = totallength;
-                    decimalcount++;
-                    totallength++;
-                }
-
-                else if ((e.KeyCode >= Keys.D0 && e.KeyCode <= Keys.D4) || (e.KeyCode >= Keys.NumPad0 && e.KeyCode <= Keys.NumPad4))
-                {
-                    number = true;
-                    state = 2;
-                    ipcount++;
-                    totallength++;
-                }
-
-                else if (((e.KeyCode == Keys.D5) || (e.KeyCode == Keys.NumPad5)) && ipcount < 3)
-                {
-                    number = true;
-                    ipcount++;
-                    totallength++;
-                }
-
-                else
-                    number = false;
-
-                stateorder[totallength] = state;
-            }
-            else if (state == 2)
-            {
-                if ((e.KeyCode == Keys.Decimal || e.KeyCode == Keys.OemPeriod) && decimalcount < 3)
-                {
-                    //check for decimal count and length
-                    number = true;
-                    state = 0;
-                    ipcount = 0;
-                    decimalplace[decimalcount] = totallength;
-                    decimalcount++;
-                    totallength++;
-                }
-
-                else if (((e.KeyCode >= Keys.D0 && e.KeyCode <= Keys.D9) || (e.KeyCode >= Keys.NumPad0 && e.KeyCode <= Keys.NumPad9)) && ipcount < 3)
-                {
-                    number = true;
-                    ipcount++;
-                    totallength++;
-                }
-
-                else
-                    number = false;
-
-                stateorder[totallength] = state;
-            }
-
-            if (e.KeyCode == Keys.Back)
-            {
-                number = true;
-                if (totallength > 0)
-                    totallength--;
-
-                if (ipcount > 0)
-                    ipcount--;
-
-                if ((decimalcount > 0) && decimalplace[decimalcount - 1] == totallength)
-                {
-                    decimalcount--;
-                    ipcount = 3;
-                }
-            }
-        }
-
-        private void OnKeyPressHandler(object sender, KeyPressEventArgs e)
-        {
-            if (number == false)
-                e.Handled = true;
-
-            Debug.WriteLine("IP Count: " + ipcount);
-            Debug.WriteLine("Decimal Count: " + decimalcount);
-            Debug.WriteLine("Total Length: " + totallength);
-        }
-
-        private void OnKeyUpHandler (object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Back)
-            {
-                Debug.WriteLine("Total Length: " + totallength);
-            }
-        }
-
         private void Connect_Click(object sender, EventArgs e)
         {
-            string[] split;
-
-            pc = new TcpClient();
-
             if (Connect.Text == "CONNECT")
             {
-                if (IP_input.Text != "")
+                pc = new TcpClient();
+                TARGET = IP_input.Text; 
+                PORT = Port_input.Text;
+
+                if ((IPisValid(TARGET)) && (PortisValid(PORT)))
                 {
-                    if (Port_input.Text != "")
+                    try
                     {
-                        try
-                        {
-
-                            TARGET = IP_input.Text;
-                            PORT = Int32.Parse(Port_input.Text);
-
-                            split = TARGET.Split('.');
-                            if (split.Length == 4)
-                            {
-                                XIP.Visible = false;
-                                XPORT.Visible = false;
-                                
-                                pc.Connect(TARGET, PORT);
-                                this.Size = new Size(450, 360);
-                                IP_input.BackColor = Color.LightGray;
-                                Port_input.BackColor = Color.LightGray;
-                                IP_input.Refresh();
-                                Port_input.Refresh();
-                                IP_input.Enabled = false;
-                                Port_input.Enabled = false;
-                                UserText.Text = "";
-                                Connect.Text = "DISCONNECT";
-                               
-                                //Test.Visible = true;
-                            }
-
-
-                        }
-                        catch (System.Net.Sockets.SocketException)
-                        {
-                            UserText.Text = "INVALID IP or PORT";
-                            UserText.Refresh();
-                            XIP.Visible = true;
-                            XPORT.Visible = true;
-                            pc.Close();
-                        }
+                        pc.Connect(TARGET, Int32.Parse(PORT));
+                        this.Size = new Size(475, 350);
+                        inputFieldSetting(Color.LightGray, "DISCONNECT", false);
                     }
-                    else
+                    catch (System.Net.Sockets.SocketException)
                     {
-                        UserText.Text = "INVALID IP or PORT";
-                        XIP.Visible = true;
-                        XPORT.Visible = true;
+                        userPromptSetting("INVALID IP or PORT", true);
+                        pc.Close();
                     }
                 }
                 else
-                {
-                    UserText.Text = "Please enter IP and PORT";
-                    XIP.Visible = true;
-                    XPORT.Visible = true;
-                }
+                    userPromptSetting("INVALID IP or PORT", true);
             }
             else
             {
                 pc.Close();
-                Connect.Text = "CONNECT";
-                UserText.Text = "";
-                IP_input.Enabled = true;
-                Port_input.Enabled = true;
-                IP_input.BackColor = Color.White;
-                Port_input.BackColor = Color.White;
-                number = false;
-                DIO1_icon.Visible = false;
-                DIO2_icon.Visible = false;
-                DIO3_icon.Visible = false;
-                DIO4_icon.Visible = false;
-
                 this.Size = new Size(240, 360);
+                inputFieldSetting(Color.White, "CONNECT", true);
+
+                Read_Prompt.Text = "[DIO#] [INPUT/OUTPUT] [LOW/HIGH]";
+                Error_Prompt.Text = "";
             }  
         }
 
-        private void Cancel_Click(object sender, EventArgs e)
+        private bool IPisValid(string ip)
         {
-            pc.Close();
-            Close();
-        }
+            string[] segmentip = new string[4];
 
-        private void Minimise_Click(object sender, EventArgs e)
-        {
-            WindowState = FormWindowState.Minimized;
-        }
+            segmentip = ip.Split('.');
 
-        private void HILO1_Click(object sender, EventArgs e)
-        {
-            if (READ1.Text == "WRITE")
+            if (segmentip.Length == 4)
             {
-                if (HILO1.Text == "HIGH")
-                    HILO1.Text = "LOW";
-                else
-                    HILO1.Text = "HIGH";
-            }
-        }
-
-        private void HILO2_Click(object sender, EventArgs e)
-        {
-            if (READ2.Text == "WRITE")
-            {
-                if (HILO2.Text == "HIGH")
-                    HILO2.Text = "LOW";
-                else
-                    HILO2.Text = "HIGH";
-            }
-        }
-
-        private void HILO3_Click(object sender, EventArgs e)
-        {
-            if (HILO3.Text == "HIGH")
-                HILO3.Text = "LOW";
-            else
-                HILO3.Text = "HIGH";
-        }
-
-        private void HILO4_Click(object sender, EventArgs e)
-        {
-            if (HILO4.Text == "HIGH")
-                HILO4.Text = "LOW";
-            else
-                HILO4.Text = "HIGH";
-        }
-
-        private void READ1_Click(object sender, EventArgs e)
-        {
-            if (READ1.Text == "WRITE")
-            {
-                READ1.Text = "READ";
-                HILO1.Text = "HIGH";
-            }
-            else
-                READ1.Text = "WRITE";
-        }
-
-        private void READ2_Click(object sender, EventArgs e)
-        {
-            if (READ2.Text == "WRITE")
-            {
-                READ2.Text = "READ";
-                HILO2.Text = "HIGH";
-            }
-            else
-                READ2.Text = "WRITE";
-
-        }
-
-        private void READ3_Click(object sender, EventArgs e)
-        {
-            if (READ3.Text == "READ")
-                READ3.Text = "WRITE";
-            else
-                READ3.Text = "READ";
-        }
-
-        private void READ4_Click(object sender, EventArgs e)
-        {
-            if (READ4.Text == "READ")
-                READ4.Text = "WRITE";
-            else
-                READ4.Text = "READ";
-        }
-
-        private void WRITE1_Click(object sender, EventArgs e)
-        {
-            DIO1_icon.Visible = false;
-            DIO1_icon.Refresh();
-
-            if(HILO1.Text == "HIGH")
-                if(READ1.Text == "READ")
-                    bytedata = new byte[] {0x01, 0x02, 0x00, 0x01, 0x00 };
-                else
-                    bytedata = new byte[] {0x02, 0x02, 0x00, 0x03, 0x00, 0x00, 0x01};
-            else
-                bytedata = new byte[] { 0x02, 0x02, 0x00, 0x03, 0x00, 0x00, 0x00 };
-
-            recieved = IO(bytedata);
-
-            if (READ1.Text == "READ")
-            {
-                if (recieved == "1203001")
-                    DIO_ICON(1, true);
-
-                else
-                    DIO_ICON(1, false);
-            }
-            else
-            {
-                for (int i =0; i < bytedata.Length; i++)
+                for (int i = 0; i < segmentip.Length; i++)
                 {
-                    if (bytedata[i].ToString() == recieved[i].ToString())
-                        DIO_ICON(1, true);
+                    if (isDigitOnly(segmentip[i]))
+                    {
+                        if (Convert.ToInt32(segmentip[i]) > 256)
+                            return false;
+                    }
                     else
-                        DIO_ICON(1, false);
+                        return false;
                 }
             }
-                
+
+            return true;
         }
 
-        private void WRITE2_Click(object sender, EventArgs e)
+        private bool PortisValid(string port)
         {
-            DIO2_icon.Visible = false;
-            DIO2_icon.Refresh();
-
-            if (HILO2.Text == "HIGH")
-                if (READ2.Text == "READ")
-                    bytedata = new byte[] { 0x01, 0x02, 0x00, 0x01, 0x01 };
-                else
-                    bytedata = new byte[] { 0x02, 0x02, 0x00, 0x03, 0x01, 0x00, 0x01 };
-            else
-                bytedata = new byte[] { 0x02, 0x02, 0x00, 0x03, 0x01, 0x00, 0x00 };
-
-            recieved = IO(bytedata);
-
-            if (READ2.Text == "READ")
+            if (isDigitOnly(port))
             {
-                if (recieved == "1203101")
-                    DIO_ICON(2, true);
+                if(Int32.Parse(port)<65535)
+                    return true;
+            }
 
-                else
-                    DIO_ICON(2, false);
-            }
-            else
-            {
-                for (int i = 0; i < bytedata.Length; i++)
-                {
-                    if (bytedata[i].ToString() == recieved[i].ToString())
-                        DIO_ICON(2, true);
-                    else
-                        DIO_ICON(2, false);
-                }
-            }
+            return false;
         }
 
-        private void WRITE3_Click(object sender, EventArgs e)
+        private bool isDigitOnly(string str)
         {
-            DIO3_icon.Visible = false;
-            DIO3_icon.Refresh();
-
-            if (READ3.Text == "WRITE")
+            foreach( char c in str)
             {
-                if (HILO3.Text == "LOW")
-                {
-                    bytedata = new byte[] { 0x02, 0x02, 0x00, 0x03, 0x02, 0x01, 0x00 };
-                    writedio3 = "00";
-                }
-
-                else
-                {
-                    bytedata = new byte[] { 0x02, 0x02, 0x00, 0x03, 0x02, 0x01, 0x01 };
-                    writedio3 = "01";
-                }
-            }
-            else
-            {
-                if (writedio3 == "00")
-                    HILO3.Text = "LOW";
-                else
-                    HILO3.Text = "HIGH";
-
-                bytedata = new byte[] { 0x01, 0x02, 0x00, 0x01, 0x02 };
+                if (c < '0' || c > '9')
+                    return false;
             }
 
-            recieved = IO(bytedata);
-
-            if (READ3.Text == "READ")
-            {
-                if (recieved == "1203210")
-                {
-                    writedio3 = "00";
-                    DIO_ICON(3, true);
-                }
-                else if (recieved == "1203211")
-                {
-                    writedio3 = "01";
-                    DIO_ICON(3, true);
-                }
-                else
-                {
-                    DIO_ICON(3, false);
-                }
-            }
-            else
-            {
-                for (int i = 0; i < bytedata.Length; i++)
-                {
-                    if (bytedata[i].ToString() == recieved[i].ToString())
-                        DIO_ICON(3, true);
-                    else
-                        DIO_ICON(3, false);
-                }
-            }
-
+            return true;
         }
 
-        private void WRITE4_Click(object sender, EventArgs e)
+        private void inputFieldSetting (Color color, String connect, bool enable)
         {
-            DIO4_icon.Visible = false;
-            DIO4_icon.Refresh();
+            IP_input.BackColor = color;
+            IP_input.Enabled = enable;
+            IP_input.Refresh();
 
-            if (READ4.Text == "WRITE")
-            {
-                if (HILO4.Text == "LOW")
-                {
-                    writedio4 = "00";
-                    bytedata = new byte[] { 0x02, 0x02, 0x00, 0x03, 0x03, 0x01, 0x00 };
-                }
+            Port_input.BackColor = color;
+            Port_input.Enabled = enable;
+            Port_input.Refresh();
 
-                else
-                {
-                    writedio4 = "01";
-                    bytedata = new byte[] { 0x02, 0x02, 0x00, 0x03, 0x03, 0x01, 0x01 };
-                }
-            }
-
-            else
-            {
-                if (writedio4 == "00")
-                    HILO4.Text = "LOW";
-                else
-                    HILO4.Text = "HIGH";
-
-                bytedata = new byte[] { 0x01, 0x02, 0x00, 0x01, 0x03 };
-            }
-
-            recieved = IO(bytedata);
-            Debug.WriteLine(recieved);
-
-            if (READ4.Text == "READ")
-            {
-                if (recieved == "1203310")
-                {
-                    writedio4 = "00";
-                    DIO_ICON(4, true);
-                }
-
-                else if (recieved == "1203311")
-                {
-                    writedio4 = "01";
-                    DIO_ICON(4, true);
-                }
-
-                else
-                {
-                    DIO_ICON(4, false);
-                }
-            }
-            else
-            {
-                for (int i = 0; i < bytedata.Length; i++)
-                {
-                    if (bytedata[i].ToString() == recieved[i].ToString())
-                        DIO_ICON(4, true);
-                    else
-                        DIO_ICON(4, false);
-                }
-            }
-
+            Connect.Text = connect;
         }
 
-        private string IO (Byte[] data)
+        private void userPromptSetting (String userprompt, bool isvisible)
         {
-            string send = string.Empty;
-            string recieve = string.Empty;
+            UserText.Text = userprompt;
+            XIP.Visible = isvisible;
+            XPORT.Visible = isvisible;
+        }
 
+        private byte[] IO(Byte[] data)
+        {
             NetworkStream datastream = pc.GetStream();
+            byte[] recieve = { };
 
             try
             {
-                string stringdata = System.Text.Encoding.UTF8.GetString(data);
-
                 datastream.Write(data, 0, data.Length);
+                data = new byte[7];
+                datastream.Read(data, 0, data.Length);
+                recieve = data;
 
-                for (int i = 0; i < data.Length; i++)
-                    send = send + data[i];
-
-                data = new byte[256];
-
-                int bytes = datastream.Read(data, 0, data.Length);
-                
-                for (int j = 0; j < bytes; j++)
-                    recieve = recieve + data[j];
-                
                 return recieve;
             }
             catch (System.IO.IOException)
@@ -580,33 +155,128 @@ namespace TAD_CHECK
 
         }
 
-        private void DIO_ICON (int num, bool correct)
+        private void HILO3_Click(object sender, EventArgs e)
         {
-            Label label;
-
-            if (num == 1)
-                label = DIO1_icon;
-            else if (num == 2)
-                label = DIO2_icon;
-            else if (num == 3)
-                label = DIO3_icon;
+            if (HILO2.Text == "LOW")
+                HILO2.Text = "HIGH";
             else
-                label = DIO4_icon;
+                HILO2.Text = "LOW";
+        }
 
-            if (correct == true)
-            {
-                label.Text = "O";
-                label.ForeColor = Color.LimeGreen;
-            }
+        private void HILO4_Click(object sender, EventArgs e)
+        {
+            if (HILO3.Text == "LOW")
+                HILO3.Text = "HIGH";
             else
+                HILO3.Text = "LOW";
+        }
+
+        private void DIO2_WRITE_CLICK(object sender, EventArgs e)
+        {
+            wrtcmd = DIO.getCmd(2, DIO2_WRITE.Text, HILO2.Text);
+            rcvcmd = IO(wrtcmd);
+            DIO.isValid(2, rcvcmd, DIO2_WRITE.Text, HILO2.Text);
+        }
+
+        private void DIO3_WRITE_Click(object sender, EventArgs e)
+        {
+            wrtcmd = DIO.getCmd(3, DIO3_WRITE.Text, HILO3.Text);
+            rcvcmd = IO(wrtcmd);
+            DIO.isValid(3, rcvcmd, DIO3_WRITE.Text, HILO3.Text);
+        }
+
+        private void DIO0_READ_Click(object sender, EventArgs e)
+        {
+            wrtcmd = DIO.getCmd(0);
+            rcvcmd = IO(wrtcmd);
+            isvalid = DIO.isValid(0, rcvcmd);
+
+            ReadPrompt(0, isvalid, rcvcmd);
+        }
+
+        private void DIO1_READ_Click(object sender, EventArgs e)
+        {
+            wrtcmd = DIO.getCmd(1);
+            rcvcmd = IO(wrtcmd);
+            isvalid = DIO.isValid(1, rcvcmd);
+
+            ReadPrompt(1, isvalid, rcvcmd);
+        }
+
+        private void DIO2_READ_Click(object sender, EventArgs e)
+        {
+            wrtcmd = DIO.getCmd(2);
+            rcvcmd = IO(wrtcmd);
+            isvalid = DIO.isValid(2, rcvcmd);
+
+            ReadPrompt(2, isvalid, rcvcmd);
+        }
+
+        private void DIO3_READ_Click(object sender, EventArgs e)
+        {
+            wrtcmd = DIO.getCmd(3);
+            rcvcmd = IO(wrtcmd);
+            isvalid = DIO.isValid(3, rcvcmd);
+
+            ReadPrompt(3, isvalid, rcvcmd);
+        }
+
+        private void ReadPrompt (int dio, bool isValid, byte[] rcvcmd)
+        {
+            Read_Prompt.Text = "";
+            Error_Prompt.Text = "";
+
+            string message = "RECIEVED : [DIO" + dio + "] ";
+            string error = "EXPECTED : [DIO" + dio + "] ";
+
+            if (rcvcmd[5] == 0)
+                message = message + "[INPUT] ";
+            else
+                message = message + "[OUTPUT] ";
+
+            if (rcvcmd[6] == 0)
+                message = message + "[LOW]";
+            else
+                message = message + "[HIGH]";
+
+            Read_Prompt.Text = message;
+
+            if(isvalid != true)
             {
-                label.Text = "X";
-                label.ForeColor = Color.Red;
+                if (dio < 2)
+                    error = error + "[INPUT] [HIGH] ";
+                else if (dio == 2)
+                {
+                    error = error + "[OUTPUT] ";
+                    if (DIO.StateDIO2 == 0)
+                        error = error + "[LOW]";
+                    else
+                        error = error + "[HIGH]";
+                }
+                else
+                {
+                    error = error + "[OUTPUT] ";
+
+                    if (DIO.StateDIO3 == 0)
+                        error = error + "[LOW]";
+                    else
+                        error = error + "[HIGH]";
+                }
+
+                Error_Prompt.Text = error;
             }
 
-            label.Refresh();
-            label.Visible = true;
+        }
 
+        private void Cancel_Click(object sender, EventArgs e)
+        {
+            pc.Close();
+            Close();
+        }
+
+        private void Minimise_Click(object sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Minimized;
         }
     }
 }
