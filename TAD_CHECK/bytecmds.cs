@@ -85,6 +85,9 @@ namespace TAD_CHECK
 
         public bool isValid(int dio, byte[] recieved, string RDWR = "READ", string HILO = "HIGH")
         {
+
+            isError(recieved);
+
             _expected[4] = byte.Parse(dio.ToString());
 
             if (dio < 2)
@@ -154,6 +157,31 @@ namespace TAD_CHECK
             set { _stateDIO3 = value; }
 
 
+        }
+
+        private void isError(byte[] recieved)
+        {
+            string errormsg = "";
+
+            if (recieved[2] != 0)
+            {
+                if (recieved[2] == 1)
+                    errormsg = "Command Error";
+                else if (recieved[2] == 2)
+                    errormsg = "Version Error";
+                else if (recieved[2] == 3)
+                    errormsg = "Length Error";
+                else if (recieved[2] == 4)
+                    errormsg = "Operation Error";
+                else if (recieved[2] == 5)
+                    errormsg = "Packet too short";
+                else if (recieved[2] == 6)
+                    errormsg = "DIO number error";
+                else
+                    errormsg = "Unknown Error";
+            }
+
+            Console.WriteLine( errormsg);
         }
     }
 }

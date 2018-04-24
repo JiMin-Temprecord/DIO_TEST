@@ -1,0 +1,9 @@
+D:\DIO_TEST\TAD_CHECK\bin\Release\TAD_CHECK.exe.config
+D:\DIO_TEST\TAD_CHECK\bin\Release\TAD_CHECK.exe
+D:\DIO_TEST\TAD_CHECK\bin\Release\TAD_CHECK.pdb
+D:\DIO_TEST\TAD_CHECK\obj\Release\TAD_CHECK.TAD.resources
+D:\DIO_TEST\TAD_CHECK\obj\Release\TAD_CHECK.Properties.Resources.resources
+D:\DIO_TEST\TAD_CHECK\obj\Release\TAD_CHECK.csproj.GenerateResource.cache
+D:\DIO_TEST\TAD_CHECK\obj\Release\TAD_CHECK.csproj.CoreCompileInputs.cache
+D:\DIO_TEST\TAD_CHECK\obj\Release\TAD_CHECK.exe
+D:\DIO_TEST\TAD_CHECK\obj\Release\TAD_CHECK.pdb

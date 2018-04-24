@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Net;
 using System.Net.Sockets;
-using System.Diagnostics;
-using System.IO;
+using System.Timers; 
 
 namespace TAD_CHECK
 {
@@ -26,9 +18,16 @@ namespace TAD_CHECK
         byte[] rcvcmd;
         bool isvalid;
 
+        System.Timers.Timer timer;
+        int loop = 0;
+
         public TAD()
         {
             InitializeComponent();
+            
+            timer = new System.Timers.Timer();
+            timer.Interval = 2000;
+            timer.AutoReset = true;
         }
 
         private void Connect_Click(object sender, EventArgs e)
@@ -45,6 +44,7 @@ namespace TAD_CHECK
                     {
                         pc.Connect(TARGET, Int32.Parse(PORT));
                         this.Size = new Size(475, 350);
+                        userPromptSetting("", false);
                         inputFieldSetting(Color.LightGray, "DISCONNECT", false);
                     }
                     catch (System.Net.Sockets.SocketException)
@@ -59,7 +59,7 @@ namespace TAD_CHECK
             else
             {
                 pc.Close();
-                this.Size = new Size(240, 360);
+                this.Size = new Size(225, 360);
                 inputFieldSetting(Color.White, "CONNECT", true);
 
                 Read_Prompt.Text = "[DIO#] [INPUT/OUTPUT] [LOW/HIGH]";
@@ -155,43 +155,25 @@ namespace TAD_CHECK
 
         }
 
-        private void HILO3_Click(object sender, EventArgs e)
-        {
-            if (HILO2.Text == "LOW")
-                HILO2.Text = "HIGH";
-            else
-                HILO2.Text = "LOW";
-        }
-
-        private void HILO4_Click(object sender, EventArgs e)
-        {
-            if (HILO3.Text == "LOW")
-                HILO3.Text = "HIGH";
-            else
-                HILO3.Text = "LOW";
-        }
-
-        private void DIO2_WRITE_CLICK(object sender, EventArgs e)
-        {
-            wrtcmd = DIO.getCmd(2, DIO2_WRITE.Text, HILO2.Text);
-            rcvcmd = IO(wrtcmd);
-            DIO.isValid(2, rcvcmd, DIO2_WRITE.Text, HILO2.Text);
-        }
-
-        private void DIO3_WRITE_Click(object sender, EventArgs e)
-        {
-            wrtcmd = DIO.getCmd(3, DIO3_WRITE.Text, HILO3.Text);
-            rcvcmd = IO(wrtcmd);
-            DIO.isValid(3, rcvcmd, DIO3_WRITE.Text, HILO3.Text);
-        }
-
         private void DIO0_READ_Click(object sender, EventArgs e)
         {
-            wrtcmd = DIO.getCmd(0);
-            rcvcmd = IO(wrtcmd);
-            isvalid = DIO.isValid(0, rcvcmd);
+            timer.Enabled = true;
 
-            ReadPrompt(0, isvalid, rcvcmd);
+            if ((loop < 5))
+            {
+                wrtcmd = DIO.getCmd(0);
+                rcvcmd = IO(wrtcmd);
+                isvalid = DIO.isValid(0, rcvcmd);
+
+                ReadPrompt(0, rcvcmd, HILO0);
+                loop++;
+            }
+            else
+            {
+                loop = 0;
+                timer.Enabled = false;
+            }
+
         }
 
         private void DIO1_READ_Click(object sender, EventArgs e)
@@ -200,7 +182,7 @@ namespace TAD_CHECK
             rcvcmd = IO(wrtcmd);
             isvalid = DIO.isValid(1, rcvcmd);
 
-            ReadPrompt(1, isvalid, rcvcmd);
+            ReadPrompt(1, rcvcmd, HILO1);
         }
 
         private void DIO2_READ_Click(object sender, EventArgs e)
@@ -209,25 +191,37 @@ namespace TAD_CHECK
             rcvcmd = IO(wrtcmd);
             isvalid = DIO.isValid(2, rcvcmd);
 
-            ReadPrompt(2, isvalid, rcvcmd);
+            ReadPrompt(2, rcvcmd, HILO2);
         }
 
         private void DIO3_READ_Click(object sender, EventArgs e)
         {
-            wrtcmd = DIO.getCmd(3);
-            rcvcmd = IO(wrtcmd);
-            isvalid = DIO.isValid(3, rcvcmd);
-
-            ReadPrompt(3, isvalid, rcvcmd);
+            timer.Elapsed += DIO3_READ;
+            timer.Enabled = true;
         }
 
-        private void ReadPrompt (int dio, bool isValid, byte[] rcvcmd)
+        public void DIO3_READ(object sender, ElapsedEventArgs e)
         {
-            Read_Prompt.Text = "";
-            Error_Prompt.Text = "";
+            if (loop < 5)
+            {
+                wrtcmd = DIO.getCmd(3);
+                rcvcmd = IO(wrtcmd);
+                isvalid = DIO.isValid(3, rcvcmd);
+                ReadPrompt(3, rcvcmd, HILO3);
 
-            string message = "RECIEVED : [DIO" + dio + "] ";
-            string error = "EXPECTED : [DIO" + dio + "] ";
+                loop++;
+            }
+            else
+            {
+                loop = 0;
+                timer.Dispose();
+            }
+        }
+
+        public void ReadPrompt (int dio, byte[] rcvcmd, Button HILO)
+        {
+            string message = "[DIO" + dio + "] ";
+            string error = "[DIO" + dio + "] ";
 
             if (rcvcmd[5] == 0)
                 message = message + "[INPUT] ";
@@ -238,39 +232,29 @@ namespace TAD_CHECK
                 message = message + "[LOW]";
             else
                 message = message + "[HIGH]";
+            
+            if (dio < 2)
+                error = error + "[INPUT] ";
+            else
+                error = error + "[OUTPUT] ";
 
-            Read_Prompt.Text = message;
+            if(HILO.Text == "HIGH")
+                error = error + "[HIGH]";
+            else
+                error = error + "[LOW]";
 
-            if(isvalid != true)
-            {
-                if (dio < 2)
-                    error = error + "[INPUT] [HIGH] ";
-                else if (dio == 2)
-                {
-                    error = error + "[OUTPUT] ";
-                    if (DIO.StateDIO2 == 0)
-                        error = error + "[LOW]";
-                    else
-                        error = error + "[HIGH]";
-                }
-                else
-                {
-                    error = error + "[OUTPUT] ";
+            if (message != error)
+                Read_Prompt.ForeColor = Color.Red;
+            else
+                Read_Prompt.ForeColor = Color.White;
 
-                    if (DIO.StateDIO3 == 0)
-                        error = error + "[LOW]";
-                    else
-                        error = error + "[HIGH]";
-                }
-
-                Error_Prompt.Text = error;
-            }
-
+           
+            Read_Prompt.Text = "RECIEVED : " + message;
+            Error_Prompt.Text = "EXPECTED : " + error;
         }
 
         private void Cancel_Click(object sender, EventArgs e)
         {
-            pc.Close();
             Close();
         }
 
@@ -278,5 +262,34 @@ namespace TAD_CHECK
         {
             WindowState = FormWindowState.Minimized;
         }
+
+        private void HILO0_Click(object sender, EventArgs e)
+        {
+            HILO_STATE(HILO0);
+        }
+
+        private void HILO1_Click(object sender, EventArgs e)
+        {
+            HILO_STATE(HILO1);
+        }
+
+        private void HILO2_Click(object sender, EventArgs e)
+        {
+            HILO_STATE(HILO2);
+        }
+
+        private void HILO3_Click(object sender, EventArgs e)
+        {
+            HILO_STATE(HILO3);
+        }
+
+        private void HILO_STATE (Button HILO)
+        {
+            if (HILO.Text == "HIGH")
+                HILO.Text = "LOW";
+            else
+                HILO.Text = "HIGH";
+        }
+
     }
 }
