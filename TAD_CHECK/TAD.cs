@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Net.Sockets;
-using System.Timers; 
 
 namespace TAD_CHECK
 {
@@ -10,6 +9,7 @@ namespace TAD_CHECK
     {
         TcpClient pc;
         DIO DIO = new DIO();
+        System.Windows.Forms.Timer timer;
 
         string TARGET;
         string PORT;
@@ -18,16 +18,20 @@ namespace TAD_CHECK
         byte[] rcvcmd;
         bool isvalid;
 
-        System.Timers.Timer timer;
-        int loop = 0;
+        int initX = 0;
+        int initY = 0;
+
+        int mouseX = 0;
+        int mouseY = 0;
+
+        bool mouseDown = false;
+        bool toggled = false;
 
         public TAD()
         {
             InitializeComponent();
-            
-            timer = new System.Timers.Timer();
-            timer.Interval = 2000;
-            timer.AutoReset = true;
+            timer = new Timer();
+            timer.Interval = 500;
         }
 
         private void Connect_Click(object sender, EventArgs e)
@@ -157,32 +161,51 @@ namespace TAD_CHECK
 
         private void DIO0_READ_Click(object sender, EventArgs e)
         {
+            timer.Tick += new EventHandler(DIO0_READ);
             timer.Enabled = true;
+            reading_panel.Visible = true;
+            DIO0_.Text = "";
+        }
 
-            if ((loop < 5))
+        private void DIO0_READ(object sender, EventArgs e)
+        {
+            while (toggled == false)
             {
                 wrtcmd = DIO.getCmd(0);
                 rcvcmd = IO(wrtcmd);
                 isvalid = DIO.isValid(0, rcvcmd);
 
                 ReadPrompt(0, rcvcmd, HILO0);
-                loop++;
-            }
-            else
-            {
-                loop = 0;
-                timer.Enabled = false;
             }
 
+            timer.Dispose();
+            reading_panel.Visible = false;
+            timer.Tick -= new EventHandler(DIO0_READ);
         }
 
         private void DIO1_READ_Click(object sender, EventArgs e)
         {
-            wrtcmd = DIO.getCmd(1);
-            rcvcmd = IO(wrtcmd);
-            isvalid = DIO.isValid(1, rcvcmd);
+            timer.Tick += new EventHandler(DIO1_READ);
+            timer.Enabled = true;
+            reading_panel.Visible = true;
+            DIO1_.Text = "";
+        }
 
-            ReadPrompt(1, rcvcmd, HILO1);
+        private void DIO1_READ(object sender, EventArgs e)
+        {
+            while (toggled == false)
+            {
+                wrtcmd = DIO.getCmd(1);
+                rcvcmd = IO(wrtcmd);
+                isvalid = DIO.isValid(1, rcvcmd);
+
+                ReadPrompt(1, rcvcmd, HILO1);
+            }
+
+            timer.Dispose();
+            reading_panel.Visible = false;
+            timer.Tick -= new EventHandler(DIO1_READ);
+
         }
 
         private void DIO2_READ_Click(object sender, EventArgs e)
@@ -196,26 +219,11 @@ namespace TAD_CHECK
 
         private void DIO3_READ_Click(object sender, EventArgs e)
         {
-            timer.Elapsed += DIO3_READ;
-            timer.Enabled = true;
-        }
+            wrtcmd = DIO.getCmd(3);
+            rcvcmd = IO(wrtcmd);
+            isvalid = DIO.isValid(3, rcvcmd);
 
-        public void DIO3_READ(object sender, ElapsedEventArgs e)
-        {
-            if (loop < 5)
-            {
-                wrtcmd = DIO.getCmd(3);
-                rcvcmd = IO(wrtcmd);
-                isvalid = DIO.isValid(3, rcvcmd);
-                ReadPrompt(3, rcvcmd, HILO3);
-
-                loop++;
-            }
-            else
-            {
-                loop = 0;
-                timer.Dispose();
-            }
+            ReadPrompt(3, rcvcmd, HILO3);
         }
 
         public void ReadPrompt (int dio, byte[] rcvcmd, Button HILO)
@@ -223,32 +231,29 @@ namespace TAD_CHECK
             string message = "[DIO" + dio + "] ";
             string error = "[DIO" + dio + "] ";
 
-            if (rcvcmd[5] == 0)
-                message = message + "[INPUT] ";
-            else
-                message = message + "[OUTPUT] ";
+            message = message + (rcvcmd[5] == 0 ? "[INPUT] " : "[OUTPUT] ");
+            message = message + (rcvcmd[6] == 0 ? "[LOW]" : "[HIGH]");
 
-            if (rcvcmd[6] == 0)
-                message = message + "[LOW]";
-            else
-                message = message + "[HIGH]";
-            
-            if (dio < 2)
-                error = error + "[INPUT] ";
-            else
-                error = error + "[OUTPUT] ";
-
-            if(HILO.Text == "HIGH")
-                error = error + "[HIGH]";
-            else
-                error = error + "[LOW]";
+            error = error + (dio < 2 ? "[INPUT] " : "[OUTPUT] ");
+            error = error + "[" + HILO.Text + "]";
 
             if (message != error)
+            {
                 Read_Prompt.ForeColor = Color.Red;
-            else
-                Read_Prompt.ForeColor = Color.White;
 
-           
+                if (dio == 0)
+                    DIO0_.Text = DIO0_.Text + "X";
+                else if (dio == 1)
+                    DIO1_.Text = DIO1_.Text + "X";
+
+                toggled = true;
+            }
+            else
+            {
+                Read_Prompt.ForeColor = Color.White;
+                toggled =  false;
+            }
+
             Read_Prompt.Text = "RECIEVED : " + message;
             Error_Prompt.Text = "EXPECTED : " + error;
         }
@@ -291,5 +296,43 @@ namespace TAD_CHECK
                 HILO.Text = "HIGH";
         }
 
+        private void IP_input_Enter(object sender, EventArgs e)
+        {
+                Connect_Click(sender, e);
+        }
+
+        private void IP_input_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                Connect_Click(sender, e);
+        }
+
+        private void Port_input_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                Connect_Click(sender, e);
+        }
+
+        private void TAD_MouseDown(object sender, MouseEventArgs e)
+        {
+            mouseDown= true;
+            initX = e.X;
+            initY = e.Y;
+        }
+
+        private void TAD_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (mouseDown)
+            {
+                mouseX = MousePosition.X - initX;
+                mouseY = MousePosition.Y - initY;
+                this.SetDesktopLocation(mouseX, mouseY);
+            }
+        }
+
+        private void TAD_MouseUp(object sender, MouseEventArgs e)
+        {
+            mouseDown = false;
+        }
     }
 }

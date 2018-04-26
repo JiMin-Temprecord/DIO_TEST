@@ -125,10 +125,7 @@ namespace TAD_CHECK
                 _cmdwrite[6] = 0x00;
                 _expected[6] = 0x00;
             }
-
-            Console.WriteLine("RECIEVED: " + BitConverter.ToString(recieved));
-            Console.WriteLine("EXPECTED: " + BitConverter.ToString(_expected));
-
+            
             if (RDWR == "READ")
             {
                 if (_expected.SequenceEqual(recieved))
