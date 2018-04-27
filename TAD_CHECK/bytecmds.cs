@@ -22,9 +22,14 @@ namespace TAD_CHECK
         private byte[] _cmdwrite = { 0x02, 0x02, 0x00, 0x03, 0x00, 0x00, 0x00 };     // Default for Write DIO0
         private byte[] _expected = { 0x01, 0x02, 0x00, 0x03, 0x00, 0x00, 0x00 };     // Deafault reply for [DIO0][INPUT]
 
+        private bool firstread0 = false;
+        private bool firstread1 = false;
         private bool firstread2 = false;
         private bool firstread3 = false;
 
+
+        private byte _stateDIO0 = 0x00;
+        private byte _stateDIO1 = 0x00;
         private byte _stateDIO2 = 0x00;
         private byte _stateDIO3 = 0x00;
 
@@ -46,6 +51,7 @@ namespace TAD_CHECK
                     _cmdwrite[5] = 0x00;
                     _cmdwrite[6] = 0x01;
                 }
+                
 
                 else if (dio == 2)
                 {
@@ -85,16 +91,38 @@ namespace TAD_CHECK
 
         public bool isValid(int dio, byte[] recieved, string RDWR = "READ", string HILO = "HIGH")
         {
-
+            // Clean this part of the code up. 
+            // Feel like after a few weeks, I wont know what this will mean, 
             isError(recieved);
 
             _expected[4] = byte.Parse(dio.ToString());
-
-            if (dio < 2)
+            
+            if (dio == 0)
             {
                 _expected[5] = 0x00;
-                _expected[6] = 0x01;
+
+                if (firstread0 == false)
+                {
+                    _stateDIO0 = recieved[6];
+                    firstread0 = true;
+                }
+
+                _expected[6] = _stateDIO0;
+
             }
+
+            else if (dio == 1)
+            {
+                _expected[5] = 0x00;
+
+                if (firstread1 == false)
+                {
+                    _stateDIO1 = recieved[6];
+                    firstread1 = true;
+                }
+
+                    _expected[6] = _stateDIO1;
+                }
 
             else if (dio == 2)
             {
@@ -107,6 +135,7 @@ namespace TAD_CHECK
                 }
                 _expected[6] = _stateDIO2;
             }
+
             else if (dio == 3)
             {
                 _expected[5] = 0x01;
@@ -142,6 +171,17 @@ namespace TAD_CHECK
             }
         }
 
+        public byte StateDIO0
+        {
+            get { return _stateDIO0; }
+            set { _stateDIO0 = value; }
+        }
+        public byte StateDIO1
+        {
+            get { return _stateDIO1; }
+            set { _stateDIO1 = value; }
+        }
+
         public byte StateDIO2
         {
             get { return _stateDIO2; }
@@ -155,7 +195,6 @@ namespace TAD_CHECK
 
 
         }
-
         private void isError(byte[] recieved)
         {
             string errormsg = "";

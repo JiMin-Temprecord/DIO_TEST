@@ -25,13 +25,12 @@ namespace TAD_CHECK
         int mouseY = 0;
 
         bool mouseDown = false;
-        bool toggled = false;
 
         public TAD()
         {
             InitializeComponent();
             timer = new Timer();
-            timer.Interval = 500;
+            timer.Interval = 2000;
         }
 
         private void Connect_Click(object sender, EventArgs e)
@@ -63,7 +62,7 @@ namespace TAD_CHECK
             else
             {
                 pc.Close();
-                this.Size = new Size(225, 360);
+                this.Size = new Size(225, 350);
                 inputFieldSetting(Color.White, "CONNECT", true);
 
                 Read_Prompt.Text = "[DIO#] [INPUT/OUTPUT] [LOW/HIGH]";
@@ -164,23 +163,26 @@ namespace TAD_CHECK
             timer.Tick += new EventHandler(DIO0_READ);
             timer.Enabled = true;
             reading_panel.Visible = true;
-            DIO0_.Text = "";
+            DIO0_.Text = "INPUT 1: ";
+            DIO0_.Visible = false;
         }
 
         private void DIO0_READ(object sender, EventArgs e)
         {
-            while (toggled == false)
+            if (DIO0_.Text.Length < 14)
             {
                 wrtcmd = DIO.getCmd(0);
                 rcvcmd = IO(wrtcmd);
                 isvalid = DIO.isValid(0, rcvcmd);
-
-                ReadPrompt(0, rcvcmd, HILO0);
+                ReadPrompt(0, rcvcmd, DIO.StateDIO0);
             }
 
-            timer.Dispose();
-            reading_panel.Visible = false;
-            timer.Tick -= new EventHandler(DIO0_READ);
+            else
+            {
+                timer.Dispose();
+                reading_panel.Visible = false;
+                timer.Tick -= new EventHandler(DIO0_READ);
+            }
         }
 
         private void DIO1_READ_Click(object sender, EventArgs e)
@@ -188,24 +190,27 @@ namespace TAD_CHECK
             timer.Tick += new EventHandler(DIO1_READ);
             timer.Enabled = true;
             reading_panel.Visible = true;
-            DIO1_.Text = "";
+            DIO1_.Text = "INPUT 2: ";
+            DIO1_.Visible = false;
         }
 
         private void DIO1_READ(object sender, EventArgs e)
         {
-            while (toggled == false)
+            if (DIO1_.Text.Length < 14)
             {
                 wrtcmd = DIO.getCmd(1);
                 rcvcmd = IO(wrtcmd);
                 isvalid = DIO.isValid(1, rcvcmd);
 
-                ReadPrompt(1, rcvcmd, HILO1);
+                ReadPrompt(1, rcvcmd, DIO.StateDIO1);
             }
 
-            timer.Dispose();
-            reading_panel.Visible = false;
-            timer.Tick -= new EventHandler(DIO1_READ);
-
+            else
+            {
+                timer.Dispose();
+                reading_panel.Visible = false;
+                timer.Tick -= new EventHandler(DIO1_READ);
+            }
         }
 
         private void DIO2_READ_Click(object sender, EventArgs e)
@@ -214,7 +219,7 @@ namespace TAD_CHECK
             rcvcmd = IO(wrtcmd);
             isvalid = DIO.isValid(2, rcvcmd);
 
-            ReadPrompt(2, rcvcmd, HILO2);
+            ReadPrompt(2, rcvcmd, DIO.StateDIO2);
         }
 
         private void DIO3_READ_Click(object sender, EventArgs e)
@@ -223,10 +228,10 @@ namespace TAD_CHECK
             rcvcmd = IO(wrtcmd);
             isvalid = DIO.isValid(3, rcvcmd);
 
-            ReadPrompt(3, rcvcmd, HILO3);
+            ReadPrompt(3, rcvcmd, DIO.StateDIO3);
         }
 
-        public void ReadPrompt (int dio, byte[] rcvcmd, Button HILO)
+        public void ReadPrompt (int dio, byte[] rcvcmd, byte DIOstate)
         {
             string message = "[DIO" + dio + "] ";
             string error = "[DIO" + dio + "] ";
@@ -235,27 +240,34 @@ namespace TAD_CHECK
             message = message + (rcvcmd[6] == 0 ? "[LOW]" : "[HIGH]");
 
             error = error + (dio < 2 ? "[INPUT] " : "[OUTPUT] ");
-            error = error + "[" + HILO.Text + "]";
+            error = error + (DIOstate == 0x00 ? "[LOW]" : "[HIGH]");
 
             if (message != error)
             {
                 Read_Prompt.ForeColor = Color.Red;
 
                 if (dio == 0)
+                {
                     DIO0_.Text = DIO0_.Text + "X";
-                else if (dio == 1)
-                    DIO1_.Text = DIO1_.Text + "X";
+                    DIO0_.Visible = true;
+                }
 
-                toggled = true;
+                else if (dio == 1)
+                {
+                    DIO1_.Text = DIO1_.Text + "X";
+                    DIO1_.Visible = true;
+                }
             }
             else
             {
                 Read_Prompt.ForeColor = Color.White;
-                toggled =  false;
             }
 
             Read_Prompt.Text = "RECIEVED : " + message;
             Error_Prompt.Text = "EXPECTED : " + error;
+
+            Console.WriteLine(Read_Prompt.Text);
+            Console.WriteLine(Error_Prompt.Text);
         }
 
         private void Cancel_Click(object sender, EventArgs e)
@@ -266,16 +278,6 @@ namespace TAD_CHECK
         private void Minimise_Click(object sender, EventArgs e)
         {
             WindowState = FormWindowState.Minimized;
-        }
-
-        private void HILO0_Click(object sender, EventArgs e)
-        {
-            HILO_STATE(HILO0);
-        }
-
-        private void HILO1_Click(object sender, EventArgs e)
-        {
-            HILO_STATE(HILO1);
         }
 
         private void HILO2_Click(object sender, EventArgs e)
@@ -333,6 +335,26 @@ namespace TAD_CHECK
         private void TAD_MouseUp(object sender, MouseEventArgs e)
         {
             mouseDown = false;
+        }
+
+        private void WRITE2_Click(object sender, EventArgs e)
+        {
+            wrtcmd = DIO.getCmd(2, WRITE2.Text, HILO2.Text);
+            rcvcmd = IO(wrtcmd);
+            isvalid = DIO.isValid(2, rcvcmd);
+        }
+
+        private void WRITE3_Click(object sender, EventArgs e)
+        {
+            wrtcmd = DIO.getCmd(3, WRITE3.Text, HILO3.Text);
+            rcvcmd = IO(wrtcmd);
+            isvalid = DIO.isValid(3, rcvcmd);
+        }
+
+        private void READ_BOTH_Click(object sender, EventArgs e)
+        {
+            DIO0_READ_Click(sender, e);
+            DIO1_READ_Click(sender, e);
         }
     }
 }
