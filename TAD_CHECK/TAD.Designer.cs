@@ -38,9 +38,9 @@ namespace TAD_CHECK
             this.XPORT = new System.Windows.Forms.Label();
             this.IP_input = new System.Windows.Forms.TextBox();
             this.Port_input = new System.Windows.Forms.TextBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.TIL_LOGO = new System.Windows.Forms.PictureBox();
+            this._IPADRRESS = new System.Windows.Forms.Label();
+            this._PORT = new System.Windows.Forms.Label();
             this.DIO1 = new System.Windows.Forms.Button();
             this.DIO0 = new System.Windows.Forms.Button();
             this.HILO2 = new System.Windows.Forms.Button();
@@ -56,11 +56,12 @@ namespace TAD_CHECK
             this.DIO0_ = new System.Windows.Forms.Label();
             this.DIO1_ = new System.Windows.Forms.Label();
             this.reading_panel = new System.Windows.Forms.Panel();
+            this.STOP = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.WRITE2 = new System.Windows.Forms.Button();
             this.WRITE3 = new System.Windows.Forms.Button();
             this.READ_BOTH = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TIL_LOGO)).BeginInit();
             this.reading_panel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -151,44 +152,44 @@ namespace TAD_CHECK
             this.Port_input.Text = "5001";
             this.Port_input.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Port_input_KeyDown);
             // 
-            // pictureBox1
+            // TIL_LOGO
             // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.ErrorImage = null;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.InitialImage = null;
-            this.pictureBox1.Location = new System.Drawing.Point(38, 45);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(159, 113);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 17;
-            this.pictureBox1.TabStop = false;
+            this.TIL_LOGO.BackColor = System.Drawing.Color.Transparent;
+            this.TIL_LOGO.ErrorImage = null;
+            this.TIL_LOGO.Image = ((System.Drawing.Image)(resources.GetObject("TIL_LOGO.Image")));
+            this.TIL_LOGO.InitialImage = null;
+            this.TIL_LOGO.Location = new System.Drawing.Point(38, 45);
+            this.TIL_LOGO.Name = "TIL_LOGO";
+            this.TIL_LOGO.Size = new System.Drawing.Size(159, 113);
+            this.TIL_LOGO.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.TIL_LOGO.TabIndex = 17;
+            this.TIL_LOGO.TabStop = false;
             // 
-            // label1
+            // _IPADRRESS
             // 
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label1.Location = new System.Drawing.Point(33, 199);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(72, 13);
-            this.label1.TabIndex = 18;
-            this.label1.Text = "IP ADDRESS";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this._IPADRRESS.BackColor = System.Drawing.Color.Transparent;
+            this._IPADRRESS.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._IPADRRESS.ForeColor = System.Drawing.Color.White;
+            this._IPADRRESS.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this._IPADRRESS.Location = new System.Drawing.Point(33, 199);
+            this._IPADRRESS.Name = "_IPADRRESS";
+            this._IPADRRESS.Size = new System.Drawing.Size(72, 13);
+            this._IPADRRESS.TabIndex = 18;
+            this._IPADRRESS.Text = "IP ADDRESS";
+            this._IPADRRESS.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // label2
+            // _PORT
             // 
-            this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label2.Location = new System.Drawing.Point(33, 245);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(40, 14);
-            this.label2.TabIndex = 19;
-            this.label2.Text = "PORT";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this._PORT.BackColor = System.Drawing.Color.Transparent;
+            this._PORT.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._PORT.ForeColor = System.Drawing.Color.White;
+            this._PORT.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this._PORT.Location = new System.Drawing.Point(33, 245);
+            this._PORT.Name = "_PORT";
+            this._PORT.Size = new System.Drawing.Size(40, 14);
+            this._PORT.TabIndex = 19;
+            this._PORT.Text = "PORT";
+            this._PORT.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // DIO1
             // 
@@ -200,7 +201,7 @@ namespace TAD_CHECK
             this.DIO1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.DIO1.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DIO1.ForeColor = System.Drawing.Color.White;
-            this.DIO1.Location = new System.Drawing.Point(334, 215);
+            this.DIO1.Location = new System.Drawing.Point(330, 198);
             this.DIO1.Margin = new System.Windows.Forms.Padding(0);
             this.DIO1.Name = "DIO1";
             this.DIO1.Size = new System.Drawing.Size(49, 23);
@@ -220,7 +221,7 @@ namespace TAD_CHECK
             this.DIO0.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.DIO0.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DIO0.ForeColor = System.Drawing.Color.White;
-            this.DIO0.Location = new System.Drawing.Point(279, 215);
+            this.DIO0.Location = new System.Drawing.Point(275, 198);
             this.DIO0.Margin = new System.Windows.Forms.Padding(0);
             this.DIO0.Name = "DIO0";
             this.DIO0.Size = new System.Drawing.Size(49, 23);
@@ -240,7 +241,7 @@ namespace TAD_CHECK
             this.HILO2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.HILO2.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.HILO2.ForeColor = System.Drawing.Color.White;
-            this.HILO2.Location = new System.Drawing.Point(334, 114);
+            this.HILO2.Location = new System.Drawing.Point(330, 97);
             this.HILO2.Margin = new System.Windows.Forms.Padding(0);
             this.HILO2.Name = "HILO2";
             this.HILO2.Size = new System.Drawing.Size(49, 23);
@@ -260,7 +261,7 @@ namespace TAD_CHECK
             this.DIO2_Label.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.DIO2_Label.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DIO2_Label.ForeColor = System.Drawing.Color.White;
-            this.DIO2_Label.Location = new System.Drawing.Point(279, 114);
+            this.DIO2_Label.Location = new System.Drawing.Point(275, 97);
             this.DIO2_Label.Margin = new System.Windows.Forms.Padding(0);
             this.DIO2_Label.Name = "DIO2_Label";
             this.DIO2_Label.Size = new System.Drawing.Size(49, 23);
@@ -274,7 +275,7 @@ namespace TAD_CHECK
             this._READ.BackColor = System.Drawing.Color.Transparent;
             this._READ.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this._READ.ForeColor = System.Drawing.Color.Transparent;
-            this._READ.Location = new System.Drawing.Point(250, 178);
+            this._READ.Location = new System.Drawing.Point(246, 161);
             this._READ.Name = "_READ";
             this._READ.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this._READ.Size = new System.Drawing.Size(217, 23);
@@ -287,7 +288,7 @@ namespace TAD_CHECK
             this._WRITE.BackColor = System.Drawing.Color.Transparent;
             this._WRITE.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this._WRITE.ForeColor = System.Drawing.Color.Transparent;
-            this._WRITE.Location = new System.Drawing.Point(249, 77);
+            this._WRITE.Location = new System.Drawing.Point(245, 60);
             this._WRITE.Name = "_WRITE";
             this._WRITE.Size = new System.Drawing.Size(218, 23);
             this._WRITE.TabIndex = 48;
@@ -303,7 +304,7 @@ namespace TAD_CHECK
             this.cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cancel.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cancel.ForeColor = System.Drawing.Color.White;
-            this.cancel.Location = new System.Drawing.Point(196, 3);
+            this.cancel.Location = new System.Drawing.Point(524, 3);
             this.cancel.Name = "cancel";
             this.cancel.Size = new System.Drawing.Size(26, 34);
             this.cancel.TabIndex = 62;
@@ -321,7 +322,7 @@ namespace TAD_CHECK
             this.minimise.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.minimise.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.minimise.ForeColor = System.Drawing.Color.White;
-            this.minimise.Location = new System.Drawing.Point(163, 3);
+            this.minimise.Location = new System.Drawing.Point(491, 3);
             this.minimise.Name = "minimise";
             this.minimise.Size = new System.Drawing.Size(26, 34);
             this.minimise.TabIndex = 63;
@@ -336,7 +337,7 @@ namespace TAD_CHECK
             this.Error_Prompt.BackColor = System.Drawing.Color.Transparent;
             this.Error_Prompt.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Error_Prompt.ForeColor = System.Drawing.Color.White;
-            this.Error_Prompt.Location = new System.Drawing.Point(250, 251);
+            this.Error_Prompt.Location = new System.Drawing.Point(246, 234);
             this.Error_Prompt.Name = "Error_Prompt";
             this.Error_Prompt.Size = new System.Drawing.Size(217, 20);
             this.Error_Prompt.TabIndex = 64;
@@ -347,7 +348,7 @@ namespace TAD_CHECK
             this.Read_Prompt.BackColor = System.Drawing.Color.Transparent;
             this.Read_Prompt.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Read_Prompt.ForeColor = System.Drawing.Color.White;
-            this.Read_Prompt.Location = new System.Drawing.Point(250, 274);
+            this.Read_Prompt.Location = new System.Drawing.Point(246, 257);
             this.Read_Prompt.Name = "Read_Prompt";
             this.Read_Prompt.Size = new System.Drawing.Size(217, 20);
             this.Read_Prompt.TabIndex = 65;
@@ -364,7 +365,7 @@ namespace TAD_CHECK
             this.HILO3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.HILO3.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.HILO3.ForeColor = System.Drawing.Color.White;
-            this.HILO3.Location = new System.Drawing.Point(334, 146);
+            this.HILO3.Location = new System.Drawing.Point(330, 129);
             this.HILO3.Margin = new System.Windows.Forms.Padding(0);
             this.HILO3.Name = "HILO3";
             this.HILO3.Size = new System.Drawing.Size(49, 23);
@@ -384,7 +385,7 @@ namespace TAD_CHECK
             this.DIO3_Label.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.DIO3_Label.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DIO3_Label.ForeColor = System.Drawing.Color.White;
-            this.DIO3_Label.Location = new System.Drawing.Point(279, 146);
+            this.DIO3_Label.Location = new System.Drawing.Point(275, 129);
             this.DIO3_Label.Margin = new System.Windows.Forms.Padding(0);
             this.DIO3_Label.Name = "DIO3_Label";
             this.DIO3_Label.Size = new System.Drawing.Size(49, 23);
@@ -398,7 +399,7 @@ namespace TAD_CHECK
             this.DIO0_.BackColor = System.Drawing.Color.Transparent;
             this.DIO0_.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DIO0_.ForeColor = System.Drawing.Color.Red;
-            this.DIO0_.Location = new System.Drawing.Point(250, 297);
+            this.DIO0_.Location = new System.Drawing.Point(246, 280);
             this.DIO0_.Name = "DIO0_";
             this.DIO0_.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.DIO0_.Size = new System.Drawing.Size(217, 20);
@@ -410,7 +411,7 @@ namespace TAD_CHECK
             this.DIO1_.BackColor = System.Drawing.Color.Transparent;
             this.DIO1_.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DIO1_.ForeColor = System.Drawing.Color.Red;
-            this.DIO1_.Location = new System.Drawing.Point(250, 320);
+            this.DIO1_.Location = new System.Drawing.Point(246, 303);
             this.DIO1_.Name = "DIO1_";
             this.DIO1_.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.DIO1_.Size = new System.Drawing.Size(217, 20);
@@ -420,21 +421,42 @@ namespace TAD_CHECK
             // reading_panel
             // 
             this.reading_panel.BackColor = System.Drawing.Color.Transparent;
+            this.reading_panel.Controls.Add(this.STOP);
             this.reading_panel.Controls.Add(this.label3);
-            this.reading_panel.Location = new System.Drawing.Point(253, 77);
+            this.reading_panel.Location = new System.Drawing.Point(249, 60);
             this.reading_panel.Name = "reading_panel";
             this.reading_panel.Size = new System.Drawing.Size(225, 173);
             this.reading_panel.TabIndex = 70;
             this.reading_panel.Visible = false;
+            // 
+            // STOP
+            // 
+            this.STOP.BackColor = System.Drawing.Color.Transparent;
+            this.STOP.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.STOP.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.STOP.FlatAppearance.BorderSize = 2;
+            this.STOP.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DodgerBlue;
+            this.STOP.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSkyBlue;
+            this.STOP.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.STOP.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.STOP.ForeColor = System.Drawing.Color.White;
+            this.STOP.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.STOP.Location = new System.Drawing.Point(7, 3);
+            this.STOP.Name = "STOP";
+            this.STOP.Size = new System.Drawing.Size(213, 163);
+            this.STOP.TabIndex = 74;
+            this.STOP.Text = "STOP";
+            this.STOP.UseVisualStyleBackColor = false;
+            this.STOP.Click += new System.EventHandler(this.STOP_Click);
             // 
             // label3
             // 
             this.label3.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label3.Font = new System.Drawing.Font("Calibri", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(0, 67);
+            this.label3.Location = new System.Drawing.Point(19, 67);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(225, 59);
+            this.label3.Size = new System.Drawing.Size(188, 59);
             this.label3.TabIndex = 0;
             this.label3.Text = "TESTING . . .";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -449,7 +471,7 @@ namespace TAD_CHECK
             this.WRITE2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.WRITE2.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.WRITE2.ForeColor = System.Drawing.Color.White;
-            this.WRITE2.Location = new System.Drawing.Point(389, 114);
+            this.WRITE2.Location = new System.Drawing.Point(385, 97);
             this.WRITE2.Margin = new System.Windows.Forms.Padding(0);
             this.WRITE2.Name = "WRITE2";
             this.WRITE2.Size = new System.Drawing.Size(52, 23);
@@ -469,7 +491,7 @@ namespace TAD_CHECK
             this.WRITE3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.WRITE3.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.WRITE3.ForeColor = System.Drawing.Color.White;
-            this.WRITE3.Location = new System.Drawing.Point(389, 146);
+            this.WRITE3.Location = new System.Drawing.Point(385, 129);
             this.WRITE3.Margin = new System.Windows.Forms.Padding(0);
             this.WRITE3.Name = "WRITE3";
             this.WRITE3.Size = new System.Drawing.Size(52, 23);
@@ -489,7 +511,7 @@ namespace TAD_CHECK
             this.READ_BOTH.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.READ_BOTH.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.READ_BOTH.ForeColor = System.Drawing.Color.White;
-            this.READ_BOTH.Location = new System.Drawing.Point(389, 215);
+            this.READ_BOTH.Location = new System.Drawing.Point(385, 198);
             this.READ_BOTH.Margin = new System.Windows.Forms.Padding(0);
             this.READ_BOTH.Name = "READ_BOTH";
             this.READ_BOTH.Size = new System.Drawing.Size(52, 23);
@@ -505,7 +527,7 @@ namespace TAD_CHECK
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.GrayText;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(224, 350);
+            this.ClientSize = new System.Drawing.Size(552, 350);
             this.Controls.Add(this.reading_panel);
             this.Controls.Add(this.READ_BOTH);
             this.Controls.Add(this.WRITE3);
@@ -524,9 +546,9 @@ namespace TAD_CHECK
             this.Controls.Add(this.DIO2_Label);
             this.Controls.Add(this._READ);
             this.Controls.Add(this._WRITE);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.TIL_LOGO);
+            this.Controls.Add(this._PORT);
+            this.Controls.Add(this._IPADRRESS);
             this.Controls.Add(this.XPORT);
             this.Controls.Add(this.XIP);
             this.Controls.Add(this.UserText);
@@ -543,7 +565,7 @@ namespace TAD_CHECK
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TAD_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TAD_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TAD_MouseUp);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TIL_LOGO)).EndInit();
             this.reading_panel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -557,9 +579,9 @@ namespace TAD_CHECK
         public System.Windows.Forms.Label XPORT;
         private System.Windows.Forms.TextBox IP_input;
         private System.Windows.Forms.TextBox Port_input;
-        private PictureBox pictureBox1;
-        public Label label1;
-        public Label label2;
+        private PictureBox TIL_LOGO;
+        public Label _IPADRRESS;
+        public Label _PORT;
         public Button DIO1;
         public Button DIO0;
         public Button HILO2;
@@ -579,6 +601,7 @@ namespace TAD_CHECK
         public Button WRITE2;
         public Button WRITE3;
         public Button READ_BOTH;
+        private Button STOP;
     }
 }
 
