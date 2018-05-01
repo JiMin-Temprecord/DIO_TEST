@@ -53,11 +53,10 @@ namespace TAD_CHECK
             this.Read_Prompt = new System.Windows.Forms.Label();
             this.HILO3 = new System.Windows.Forms.Button();
             this.DIO3_Label = new System.Windows.Forms.Button();
-            this.DIO0_ = new System.Windows.Forms.Label();
-            this.DIO1_ = new System.Windows.Forms.Label();
+            this.togglecnt_0 = new System.Windows.Forms.Label();
+            this.togglecnt_1 = new System.Windows.Forms.Label();
             this.reading_panel = new System.Windows.Forms.Panel();
             this.STOP = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
             this.WRITE2 = new System.Windows.Forms.Button();
             this.WRITE3 = new System.Windows.Forms.Button();
             this.READ_BOTH = new System.Windows.Forms.Button();
@@ -304,7 +303,7 @@ namespace TAD_CHECK
             this.cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cancel.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cancel.ForeColor = System.Drawing.Color.White;
-            this.cancel.Location = new System.Drawing.Point(524, 3);
+            this.cancel.Location = new System.Drawing.Point(198, 3);
             this.cancel.Name = "cancel";
             this.cancel.Size = new System.Drawing.Size(26, 34);
             this.cancel.TabIndex = 62;
@@ -322,7 +321,7 @@ namespace TAD_CHECK
             this.minimise.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.minimise.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.minimise.ForeColor = System.Drawing.Color.White;
-            this.minimise.Location = new System.Drawing.Point(491, 3);
+            this.minimise.Location = new System.Drawing.Point(165, 3);
             this.minimise.Name = "minimise";
             this.minimise.Size = new System.Drawing.Size(26, 34);
             this.minimise.TabIndex = 63;
@@ -394,35 +393,34 @@ namespace TAD_CHECK
             this.DIO3_Label.Text = "DIO3";
             this.DIO3_Label.UseVisualStyleBackColor = false;
             // 
-            // DIO0_
+            // togglecnt_0
             // 
-            this.DIO0_.BackColor = System.Drawing.Color.Transparent;
-            this.DIO0_.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DIO0_.ForeColor = System.Drawing.Color.Red;
-            this.DIO0_.Location = new System.Drawing.Point(246, 280);
-            this.DIO0_.Name = "DIO0_";
-            this.DIO0_.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.DIO0_.Size = new System.Drawing.Size(217, 20);
-            this.DIO0_.TabIndex = 68;
-            this.DIO0_.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.togglecnt_0.BackColor = System.Drawing.Color.Transparent;
+            this.togglecnt_0.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.togglecnt_0.ForeColor = System.Drawing.Color.Red;
+            this.togglecnt_0.Location = new System.Drawing.Point(246, 280);
+            this.togglecnt_0.Name = "togglecnt_0";
+            this.togglecnt_0.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.togglecnt_0.Size = new System.Drawing.Size(217, 20);
+            this.togglecnt_0.TabIndex = 68;
+            this.togglecnt_0.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // DIO1_
+            // togglecnt_1
             // 
-            this.DIO1_.BackColor = System.Drawing.Color.Transparent;
-            this.DIO1_.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DIO1_.ForeColor = System.Drawing.Color.Red;
-            this.DIO1_.Location = new System.Drawing.Point(246, 303);
-            this.DIO1_.Name = "DIO1_";
-            this.DIO1_.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.DIO1_.Size = new System.Drawing.Size(217, 20);
-            this.DIO1_.TabIndex = 69;
-            this.DIO1_.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.togglecnt_1.BackColor = System.Drawing.Color.Transparent;
+            this.togglecnt_1.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.togglecnt_1.ForeColor = System.Drawing.Color.Red;
+            this.togglecnt_1.Location = new System.Drawing.Point(246, 303);
+            this.togglecnt_1.Name = "togglecnt_1";
+            this.togglecnt_1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.togglecnt_1.Size = new System.Drawing.Size(217, 20);
+            this.togglecnt_1.TabIndex = 69;
+            this.togglecnt_1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // reading_panel
             // 
             this.reading_panel.BackColor = System.Drawing.Color.Transparent;
             this.reading_panel.Controls.Add(this.STOP);
-            this.reading_panel.Controls.Add(this.label3);
             this.reading_panel.Location = new System.Drawing.Point(249, 60);
             this.reading_panel.Name = "reading_panel";
             this.reading_panel.Size = new System.Drawing.Size(225, 173);
@@ -441,25 +439,13 @@ namespace TAD_CHECK
             this.STOP.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.STOP.ForeColor = System.Drawing.Color.White;
             this.STOP.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.STOP.Location = new System.Drawing.Point(7, 3);
+            this.STOP.Location = new System.Drawing.Point(6, 5);
             this.STOP.Name = "STOP";
             this.STOP.Size = new System.Drawing.Size(213, 163);
             this.STOP.TabIndex = 74;
             this.STOP.Text = "STOP";
             this.STOP.UseVisualStyleBackColor = false;
             this.STOP.Click += new System.EventHandler(this.STOP_Click);
-            // 
-            // label3
-            // 
-            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.label3.Font = new System.Drawing.Font("Calibri", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(19, 67);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(188, 59);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "TESTING . . .";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // WRITE2
             // 
@@ -527,13 +513,13 @@ namespace TAD_CHECK
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.GrayText;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(552, 350);
+            this.ClientSize = new System.Drawing.Size(226, 350);
             this.Controls.Add(this.reading_panel);
             this.Controls.Add(this.READ_BOTH);
             this.Controls.Add(this.WRITE3);
             this.Controls.Add(this.WRITE2);
-            this.Controls.Add(this.DIO1_);
-            this.Controls.Add(this.DIO0_);
+            this.Controls.Add(this.togglecnt_1);
+            this.Controls.Add(this.togglecnt_0);
             this.Controls.Add(this.HILO3);
             this.Controls.Add(this.DIO3_Label);
             this.Controls.Add(this.Read_Prompt);
@@ -594,10 +580,9 @@ namespace TAD_CHECK
         public Label Read_Prompt;
         public Button HILO3;
         public Button DIO3_Label;
-        private Label DIO0_;
-        private Label DIO1_;
+        private Label togglecnt_0;
+        private Label togglecnt_1;
         private Panel reading_panel;
-        private Label label3;
         public Button WRITE2;
         public Button WRITE3;
         public Button READ_BOTH;

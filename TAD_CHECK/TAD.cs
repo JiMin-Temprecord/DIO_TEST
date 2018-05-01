@@ -9,7 +9,7 @@ namespace TAD_CHECK
     {
         TcpClient pc;
         bytecmd bytecmd = new bytecmd();
-        System.Windows.Forms.Timer timer;
+        Timer timer;
 
         string TARGET;
         string PORT;
@@ -48,8 +48,8 @@ namespace TAD_CHECK
             timer.Tick += new EventHandler(DIO0_READ);
             timer.Enabled = true;
             reading_panel.Visible = true;
-            DIO0_.Text = "INPUT 1: ";
-            DIO0_.Visible = false;
+            togglecnt_0.Text = "INPUT 1: ";
+            togglecnt_0.Visible = false;
 
         }
 
@@ -57,13 +57,16 @@ namespace TAD_CHECK
         {
             if (!stopped)
             {
+                dio2.expectedcmd[6] = 0x00;
+                IO(dio2.expectedcmd);
+
                 wrtcmd = bytecmd.getCmd(dio0.expectedcmd);
                 rcvcmd = IO(wrtcmd);
 
-                if (dio0.isfirst)
+                if (dio0.isfirstread)
                 {
                     dio0.expectedcmd = rcvcmd;
-                    dio0.isfirst = false;
+                    dio0.isfirstread = false;
                     dio0.state = (dio0.expectedcmd[6] == 0) ? "LOW" : "HIGH";
                 }
 
@@ -83,8 +86,8 @@ namespace TAD_CHECK
             timer.Tick += new EventHandler(DIO1_READ);
             timer.Enabled = true;
             reading_panel.Visible = true;
-            DIO1_.Text = "INPUT 2: ";
-            DIO1_.Visible = false;
+            togglecnt_1.Text = "INPUT 2: ";
+            togglecnt_1.Visible = false;
             stopped = false;
         }
 
@@ -92,13 +95,16 @@ namespace TAD_CHECK
         {
             if (!stopped)
             {
+                dio3.expectedcmd[6] = 0x00;
+                IO(dio3.expectedcmd);
+
                 wrtcmd = bytecmd.getCmd(dio1.expectedcmd);
                 rcvcmd = IO(wrtcmd);
 
-                if (dio1.isfirst)
+                if (dio1.isfirstread)
                 {
                     dio1.expectedcmd = rcvcmd;
-                    dio1.isfirst = false;
+                    dio1.isfirstread = false;
                     dio1.state = (dio1.expectedcmd[6] == 0) ? "LOW" : "HIGH";
                 }
 
@@ -151,6 +157,7 @@ namespace TAD_CHECK
 
             wrtcmd = bytecmd.getCmd(dio2.expectedcmd);
             IO(wrtcmd);
+            Connect.Enabled = true;
         }
 
         private void WRITE3_Click(object sender, EventArgs e)
@@ -168,8 +175,32 @@ namespace TAD_CHECK
 
             wrtcmd = bytecmd.getCmd(dio3.expectedcmd);
             IO(wrtcmd);
+            Connect.Enabled = true;
         }
-        
+
+        private byte[] IO(Byte[] data)
+        {
+            NetworkStream datastream = pc.GetStream();
+            Connect.Enabled = false;
+            byte[] recieve = { };
+
+            try
+            {
+                datastream.Write(data, 0, data.Length);
+                data = new byte[7];
+                datastream.Read(data, 0, data.Length);
+                recieve = data;
+                return recieve;
+            }
+            catch (System.IO.IOException)
+            {
+                UserText.Text = "NO CONNECTION";
+                datastream.Close();
+                return recieve;
+            }
+
+        }
+
         public void ReadPrompt (DIO dio, byte[] rcvcmd)
         {
             string message = "[DIO" + dio.number + "] ";
@@ -181,38 +212,47 @@ namespace TAD_CHECK
             error = error + "[" + dio.io + "] ";
             error = error + "[" + dio.state + "]";
 
+
             if (message != error)
+            {
                 dio.toggled = true;
+
+                if (bytecmd.errormessage(rcvcmd) != "")
+                    Error_Prompt.Text = bytecmd.errormessage(rcvcmd);
+
+            }
             else
             {
-                if(dio.toggled == true)
+                if (dio.toggled == true)
                 {
                     Read_Prompt.ForeColor = Color.Red;
 
                     if (dio.number == 0)
                     {
-                        DIO0_.Text = DIO0_.Text + "X";
-                        DIO0_.Visible = true;
+                        togglecnt_0.Text = togglecnt_0.Text + "X";
+                        togglecnt_0.Visible = true;
+                        dio2.expectedcmd[6] = 0x01;
+                        IO(dio2.expectedcmd);
                     }
 
                     else if (dio.number == 1)
                     {
-                        DIO1_.Text = DIO1_.Text + "X";
-                        DIO1_.Visible = true;
+                        togglecnt_1.Text = togglecnt_1.Text + "X";
+                        togglecnt_1.Visible = true;
+                        dio3.expectedcmd[6] = 0x01;
+                        IO(dio3.expectedcmd);
                     }
 
                     dio.toggled = false;
                 }
                 else
+                {
                     Read_Prompt.ForeColor = Color.White;
+                }
             }
 
             Read_Prompt.Text = "RECIEVED : " + message;
             Error_Prompt.Text = "EXPECTED : " + error;
-
-            Console.WriteLine(Read_Prompt.Text);
-            Console.WriteLine(Error_Prompt.Text);
-            Console.WriteLine("TOGGLED: " + dio.toggled);
         }
 
         private void Cancel_Click(object sender, EventArgs e)
@@ -257,14 +297,18 @@ namespace TAD_CHECK
                 this.Size = new Size(225, 350);
                 inputFieldSetting(Color.White, "CONNECT", true);
 
+                Read_Prompt.ForeColor = Color.White;
                 Read_Prompt.Text = "[DIO#] [INPUT/OUTPUT] [LOW/HIGH]";
                 Error_Prompt.Text = "";
+                togglecnt_0.Text = "";
+                togglecnt_1.Text = "";
             }
         }
 
         private void STOP_Click(object sender, EventArgs e)
         {
             stopped = true;
+            Connect.Enabled = true;
         }
 
         private bool IPisValid(string ip)
@@ -330,29 +374,6 @@ namespace TAD_CHECK
             UserText.Text = userprompt;
             XIP.Visible = isvisible;
             XPORT.Visible = isvisible;
-        }
-
-        private byte[] IO(Byte[] data)
-        {
-            NetworkStream datastream = pc.GetStream();
-            byte[] recieve = { };
-
-            try
-            {
-                datastream.Write(data, 0, data.Length);
-                data = new byte[7];
-                datastream.Read(data, 0, data.Length);
-                recieve = data;
-
-                return recieve;
-            }
-            catch (System.IO.IOException)
-            {
-                UserText.Text = "NO CONNECTION";
-                datastream.Close();
-                return recieve;
-            }
-
         }
 
         private void IP_input_KeyDown(object sender, KeyEventArgs e)

@@ -12,7 +12,7 @@ namespace TAD_CHECK
         public string state;
         public string io;
         public bool toggled;
-        public bool isfirst;
+        public bool isfirstread;
         public byte[] expectedcmd;
 
         public DIO(int Number, string State, string IO, bool Toggled, bool isFirst, byte[] expectedCmd)
@@ -21,7 +21,7 @@ namespace TAD_CHECK
             state = State;
             io = IO;
             toggled = Toggled;
-            isfirst = isFirst;
+            isfirstread = isFirst;
             expectedcmd = expectedCmd;
         }
     }

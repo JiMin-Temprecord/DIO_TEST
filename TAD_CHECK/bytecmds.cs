@@ -65,7 +65,7 @@ namespace TAD_CHECK
 
 
         }
-        private void isError(byte[] recieved)
+        public string errormessage(byte[] recieved)
         {
             string errormsg = "";
 
@@ -87,7 +87,7 @@ namespace TAD_CHECK
                     errormsg = "Unknown Error";
             }
 
-            Console.WriteLine( errormsg);
+            return errormsg;
         }
     }
 }
